@@ -87,7 +87,7 @@ function ProductPage() {
           onScroll={(e) => setSlide(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
           className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto bg-muted"
         >
-          {product.gallery.map((g, i) => (
+          {product.gallery.map((g: string, i: number) => (
             <button
               key={i}
               onClick={() => setZoom(true)}
@@ -106,7 +106,7 @@ function ProductPage() {
           <ZoomIn size={12} /> Tap to zoom
         </span>
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
-          {product.gallery.map((_, i) => (
+          {product.gallery.map((_: string, i: number) => (
             <span
               key={i}
               className={cn(

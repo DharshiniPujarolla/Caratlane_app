@@ -121,7 +121,7 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/auth"];
+const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout"];
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();

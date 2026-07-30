@@ -137,7 +137,8 @@ function Index() {
           </h3>
           <p className="mt-1 text-xs opacity-85">Ends Sunday · Use code GOLDZERO</p>
           <Link
-            to="/category/gold"
+            to="/category/$slug"
+            params={{ slug: "gold" }}
             className="press mt-3 inline-flex rounded-full bg-background px-4 py-2 text-xs font-semibold text-primary"
           >
             Shop Gold Jewellery

@@ -15,12 +15,13 @@ import { toast } from "sonner";
 import { PageHeader, SectionHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { ReviewCard } from "@/components/Cards";
+import type { Product } from "@/lib/data";
 import { discount, findProduct, inr, offers, products, reviewsData } from "@/lib/data";
 import { actions, useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$id")({
-  loader: ({ params }) => {
+  loader: ({ params }): { product: Product } => {
     const product = findProduct(params.id);
     if (!product) throw notFound();
     return { product };

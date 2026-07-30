@@ -46,7 +46,7 @@ export function SectionHeader({
         {caption && <p className="text-xs text-muted-foreground">{caption}</p>}
       </div>
       {to && (
-        <Link to={to} className="text-xs font-semibold text-primary">
+        <Link to={to as never} className="text-xs font-semibold text-primary">
           View all
         </Link>
       )}

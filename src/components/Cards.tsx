@@ -42,7 +42,7 @@ export function TileCard({
 }) {
   return (
     <Link
-      to={to}
+      to={to as never}
       className="press relative h-32 w-[150px] shrink-0 overflow-hidden rounded-2xl shadow-soft"
     >
       <img src={image} alt={title} loading="lazy" className="h-full w-full object-cover" />

@@ -184,7 +184,7 @@ function Cart() {
         </div>
       </div>
 
-      <div className="glass fixed inset-x-0 bottom-[84px] z-40 mx-auto flex max-w-[480px] items-center gap-3 rounded-2xl border border-border/60 px-4 py-3 shadow-float mx-3">
+      <div className="glass fixed inset-x-4 bottom-[84px] z-40 mx-auto flex max-w-[448px] items-center gap-3 rounded-2xl border border-border/60 px-4 py-3 shadow-float">
         <div>
           <p className="text-[15px] font-semibold">{inr(t.total)}</p>
           <p className="text-[11px] text-muted-foreground">incl. taxes</p>

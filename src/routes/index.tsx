@@ -1,4 +1,4 @@
-import { Navigate } from "@tanstack/react-router";
+import { TryOnBanner } from "@/components/TryOnBanner";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { BannerCarousel } from "@/components/BannerCarousel";
@@ -115,6 +115,7 @@ function Index() {
       </header>
 
       <BannerCarousel />
+       <TryOnBanner />
 
       <section className="px-4">
         <LumiMirrorCard />

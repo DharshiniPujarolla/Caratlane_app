@@ -4,9 +4,9 @@ import { useEffect } from "react";
 export const Route = createFileRoute("/splash")({
   head: () => ({
     meta: [
-      { title: "Luméa — Fine Jewellery" },
-      { name: "description", content: "Luméa fine jewellery. Everyday luxury, crafted to last." },
-      { property: "og:title", content: "Luméa — Fine Jewellery" },
+      { title: "LumiAura — Fine Jewellery" },
+      { name: "description", content: "LumiAura fine jewellery. Everyday luxury, crafted to last." },
+      { property: "og:title", content: "LumiAura — Fine Jewellery" },
       { property: "og:description", content: "Everyday luxury, crafted to last." },
     ],
   }),
@@ -26,7 +26,7 @@ function Splash() {
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/30 bg-white/10">
           <span className="font-display text-2xl font-semibold">L</span>
         </div>
-        <h1 className="text-3xl font-semibold tracking-[0.22em]">LUMÉA</h1>
+        <h1 className="text-3xl font-semibold tracking-[0.22em]">LUMIAURA</h1>
         <p className="mt-3 text-[11px] uppercase tracking-[0.35em] opacity-80">
           Everyday Luxury
         </p>

@@ -9,9 +9,9 @@ import { actions, useStore } from "@/lib/store";
 export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
-      { title: "Search Jewellery — Luméa" },
+      { title: "Search Jewellery — LumiAura" },
       { name: "description", content: "Search rings, earrings, chains and more. Try voice or image search." },
-      { property: "og:title", content: "Search Jewellery — Luméa" },
+      { property: "og:title", content: "Search Jewellery — LumiAura" },
       { property: "og:description", content: "Find your next piece with text, voice or image search." },
     ],
   }),

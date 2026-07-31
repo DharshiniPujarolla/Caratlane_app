@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Luméa Fine Jewellery" },
+      { title: "Sign in — LumiAura Fine Jewellery" },
       {
         name: "description",
-        content: "Sign in or create a Luméa account to track orders, save wishlists and earn rewards.",
+        content: "Sign in or create a LumiAura account to track orders, save wishlists and earn rewards.",
       },
-      { property: "og:title", content: "Sign in — Luméa Fine Jewellery" },
+      { property: "og:title", content: "Sign in — LumiAura Fine Jewellery" },
       { property: "og:description", content: "Sign in to track orders and save your wishlist." },
     ],
   }),
@@ -65,7 +65,7 @@ function Auth() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <div className="gradient-primary px-6 pb-10 pt-14 text-primary-foreground">
-        <h1 className="text-2xl font-semibold tracking-[0.2em]">LUMÉA</h1>
+        <h1 className="text-2xl font-semibold tracking-[0.2em]">LUMIAURA</h1>
         <p className="mt-2 text-xs opacity-85">
           {mode === "signup"
             ? "Create your account for rewards & faster checkout."
@@ -135,7 +135,7 @@ function Auth() {
             </button>
             <button
               onClick={() => {
-                actions.signIn("Guest", "guest@lumea.com", true);
+                actions.signIn("Guest", "guest@lumiaura.com", true);
                 navigate({ to: "/" });
               }}
               className="press mt-3 w-full rounded-xl py-3 text-sm font-semibold text-primary"

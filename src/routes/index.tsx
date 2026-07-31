@@ -19,13 +19,13 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Luméa — Everyday Diamond & Gold Jewellery" },
+      { title: "LumiAura — Everyday Diamond & Gold Jewellery" },
       {
         name: "description",
         content:
           "Discover trending collections, new arrivals and best sellers in diamond and gold jewellery, crafted for everyday luxury.",
       },
-      { property: "og:title", content: "Luméa — Everyday Diamond & Gold Jewellery" },
+      { property: "og:title", content: "LumiAura — Everyday Diamond & Gold Jewellery" },
       {
         property: "og:description",
         content: "Trending collections, new arrivals and best sellers in fine jewellery.",
@@ -260,7 +260,7 @@ function Index() {
       <footer className="px-4 pb-4 text-center text-[11px] text-muted-foreground">
         <p>Lifetime exchange · 15-day returns · Certified diamonds</p>
         <Link to="/stores" className="mt-1 inline-block font-semibold text-primary">
-          Find a Luméa store near you
+          Find a LumiAura store near you
         </Link>
       </footer>
     </div>

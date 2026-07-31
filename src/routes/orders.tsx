@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/orders")({
   head: () => ({
     meta: [
-      { title: "My Orders — Luméa Jewellery" },
+      { title: "My Orders — LumiAura Jewellery" },
       { name: "description", content: "Track active orders, review past purchases and manage cancellations." },
-      { property: "og:title", content: "My Orders — Luméa Jewellery" },
-      { property: "og:description", content: "Track and manage your Luméa orders." },
+      { property: "og:title", content: "My Orders — LumiMura Jewellery" },
+      { property: "og:description", content: "Track and manage your LumiAura orders." },
     ],
   }),
   component: Orders,

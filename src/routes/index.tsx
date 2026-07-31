@@ -4,6 +4,7 @@ import { BannerCarousel } from "@/components/BannerCarousel";
 import { CategoryCircle, OfferCard, TileCard } from "@/components/Cards";
 import { SectionHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
+import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import {
   categories,
   collections,
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Discover trending collections, new arrivals and best sellers in diamond and gold jewellery, crafted for everyday luxury.",
+          "Discover \ending collections, new arrivals and best sellers in diamond and gold jewellery, crafted for everyday luxury.",
       },
       { property: "og:title", content: "LumiAura — Everyday Diamond & Gold Jewellery" },
       {
@@ -94,6 +95,10 @@ function Index() {
       </header>
 
       <BannerCarousel />
+
+      <section className="px-4">
+        <LumiMirrorCard />
+      </section>
 
       <section>
         <SectionHeader title="Shop by Category" to="/categories" />

@@ -136,6 +136,7 @@ function RootComponent() {
           <Outlet />
         </div>
         {!bare && <BottomNav />}
+        {!splashLike && <ConciergeFab />}
       </div>
       <Toaster position="top-center" />
     </QueryClientProvider>

@@ -31,15 +31,15 @@ function Brands() {
 
       <Link
         to="/"
-        style={{ animationDelay: "80ms, 0ms" }}
-        className="animate-fade-up float-card relative block h-[38svh] overflow-hidden rounded-3xl shadow-float"
+        style={{ animationDelay: "60ms, 660ms" }}
+        className="brand-card group relative block h-[38svh] overflow-hidden rounded-3xl shadow-float"
       >
         <img
           src={lumiauraImg}
           alt="LumiAura diamond and gold jewellery"
           width={1200}
           height={800}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06] group-active:scale-[1.02]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
@@ -59,14 +59,15 @@ function Brands() {
 
       <Link
         to="/shaya"
-        className="press animate-fade-up relative block h-[38svh] overflow-hidden rounded-3xl shadow-card"
+        style={{ animationDelay: "200ms, 800ms" }}
+        className="brand-card group relative block h-[38svh] overflow-hidden rounded-3xl shadow-float"
       >
         <img
           src={shayaImg}
           alt="SHAYA silver jewellery for best friends"
           width={1200}
           height={800}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06] group-active:scale-[1.02]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.25_0.06_200_/_0.85)] via-[oklch(0.25_0.06_200_/_0.25)] to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">

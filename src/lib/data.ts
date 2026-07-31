@@ -9,7 +9,6 @@ import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
 import hero5 from "@/assets/hero-5.jpg";
 import hero6 from "@/assets/hero-6.jpg";
-
 import ring2 from "@/assets/p-ring2.jpg";
 import bracelet2 from "@/assets/p.bracelet2.jpg";
 import earrings2 from "@/assets/p.earrings2.jpg";
@@ -17,6 +16,10 @@ import earrings3 from "@/assets/p.earrings3.jpg";
 import earrings4 from "@/assets/p.earrings4.jpg";
 import pendant2 from "@/assets/p.pendant2.jpg";
 import pendant3 from "@/assets/p.pendant3.jpg";
+import necklaceTryon3 from "@/assets/necklace-tryon-3.png";
+import necklaceTryon4 from "@/assets/necklace-tryon-4.png";
+import necklaceTryon5 from "@/assets/necklace-tryon-5.png";
+import necklaceTryon6 from "@/assets/necklace-tryon-6.png";
 
 import yami from "@/assets/yami.jpg";
 
@@ -79,7 +82,7 @@ const catImage: Record<string, string[]> = {
   Rings: [ring, ring2],
   Earrings: [earrings, earrings2, earrings3, earrings4],
   Pendants: [pendant, pendant2, pendant3],
-  Necklaces: [necklace],
+  Necklaces: [necklace, necklaceTryon3, necklaceTryon4, necklaceTryon5, necklaceTryon6],
   Bracelets: [bracelet, bracelet2],
   Bangles: [bracelet2],
   Chains: [necklace],

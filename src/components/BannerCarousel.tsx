@@ -19,7 +19,7 @@ export function BannerCarousel() {
   }, [index]);
 
   return (
-    <div className="px-4">
+    <div className="px-4 lg:px-8">
       <div
         ref={ref}
         onScroll={(e) => {
@@ -32,7 +32,7 @@ export function BannerCarousel() {
           <Link
             key={b.id}
             to={b.to as never}
-            className="relative aspect-[16/10] w-full shrink-0 snap-center overflow-hidden rounded-3xl"
+            className="relative aspect-[16/10] lg:aspect-[21/8] w-full shrink-0 snap-center overflow-hidden rounded-3xl"
           >
             <img
               src={b.image}

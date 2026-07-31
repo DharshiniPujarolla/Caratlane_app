@@ -12,12 +12,12 @@ export const Route = createFileRoute("/category/$slug")({
       categories.find((c) => c.slug === params.slug)?.name ?? "Jewellery";
     return {
       meta: [
-        { title: `${name} — Buy Online | Luméa` },
+        { title: `${name} — Buy Online | LumiAura` },
         {
           name: "description",
           content: `Shop ${name.toLowerCase()} in gold, diamond and platinum. Filter by price, metal, occasion and more.`,
         },
-        { property: "og:title", content: `${name} — Buy Online | Luméa` },
+        { property: "og:title", content: `${name} — Buy Online | LumiAura` },
         {
           property: "og:description",
           content: `Shop ${name.toLowerCase()} with certified diamonds and lifetime exchange.`,

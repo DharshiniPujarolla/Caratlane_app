@@ -18,9 +18,9 @@ import { actions, useStore } from "@/lib/store";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "My Account — Luméa Jewellery" },
+      { title: "My Account — LumiAura Jewellery" },
       { name: "description", content: "Manage your profile, addresses, saved cards, rewards and notifications." },
-      { property: "og:title", content: "My Account — Luméa Jewellery" },
+      { property: "og:title", content: "My Account — LumiAura Jewellery" },
       { property: "og:description", content: "Profile, addresses, rewards and settings." },
     ],
   }),
@@ -76,7 +76,7 @@ function Profile() {
       <div className="mx-4 mt-4 flex items-center gap-3 rounded-2xl border border-gold/40 bg-gold-soft/60 p-3">
         <Gem size={18} className="text-[color:var(--gold)]" />
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-semibold">Luméa Rewards · Gold tier</p>
+          <p className="text-[13px] font-semibold">LumiAura Rewards · Gold tier</p>
           <p className="text-[11px] text-muted-foreground">
             1,250 points · ₹1,250 off your next order
           </p>
@@ -103,7 +103,7 @@ function Profile() {
         <LogOut size={16} /> {user ? "Log out" : "Sign in"}
       </button>
 
-      <p className="mt-4 text-center text-[11px] text-muted-foreground">Luméa · v1.0.0</p>
+      <p className="mt-4 text-center text-[11px] text-muted-foreground">LumiAura · v1.0.0</p>
     </div>
   );
 }

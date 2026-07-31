@@ -1,0 +1,16 @@
+<svg width="720" height="960" viewBox="0 0 720 960" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="960" rx="40" fill="#f7f2eb"/>
+  <rect x="80" y="90" width="560" height="780" rx="34" fill="#f1e6da"/>
+  <circle cx="360" cy="315" r="115" fill="#f2c8a2"/>
+  <path d="M250 310c20-120 180-150 220-55 22 52-10 118-70 142-43 18-112 8-150-87Z" fill="#1f2430"/>
+  <rect x="250" y="420" width="220" height="260" rx="28" fill="#224f8a"/>
+  <rect x="280" y="440" width="160" height="220" rx="24" fill="#f7f4ee"/>
+  <rect x="300" y="462" width="70" height="75" rx="16" fill="#1f2430"/>
+  <rect x="378" y="462" width="48" height="75" rx="16" fill="#d8c2a3"/>
+  <rect x="230" y="675" width="260" height="140" rx="30" fill="#3a4d76"/>
+  <rect x="250" y="690" width="80" height="110" rx="20" fill="#1f2430"/>
+  <rect x="340" y="690" width="120" height="110" rx="20" fill="#f3e6bf"/>
+  <rect x="190" y="500" width="80" height="220" rx="24" fill="#2f4a7d"/>
+  <rect x="450" y="500" width="80" height="220" rx="24" fill="#2f4a7d"/>
+  <path d="M240 290c13-58 68-96 120-96 58 0 111 39 121 96" stroke="#e2a47d" stroke-width="18" fill="none" stroke-linecap="round"/>
+</svg>

@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/BottomNav";
+import { ConciergeFab } from "@/components/ConciergeFab";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -80,13 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Luméa — Fine Diamond & Gold Jewellery" },
+      { title: "LumiAura — Fine Diamond & Gold Jewellery" },
       {
         name: "description",
         content:
-          "Shop everyday diamond and gold jewellery from Luméa. Rings, earrings, pendants and more with free delivery and lifetime exchange.",
+          "Shop everyday diamond and gold jewellery from LumiAura. Rings, earrings, pendants and more with free delivery and lifetime exchange.",
       },
-      { name: "author", content: "Luméa" },
+      { name: "author", content: "LumiAura" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -121,21 +122,23 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout"];
+const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout", "/brands", "/shaya"];
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
+  const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="mx-auto min-h-screen w-full max-w-[480px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
+      <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
         <div key={pathname} className="animate-soft-in pb-24">
           {/* Required: nested routes render here. */}
           <Outlet />
         </div>
         {!bare && <BottomNav />}
+        {!splashLike && <ConciergeFab />}
       </div>
       <Toaster position="top-center" />
     </QueryClientProvider>

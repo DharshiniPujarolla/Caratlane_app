@@ -9,7 +9,7 @@ import { actions, useStore } from "@/lib/store";
 export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
-      { title: "Your Bag — Luméa Jewellery" },
+      { title: "Your Bag — LumiAura Jewellery" },
       { name: "description", content: "Review your jewellery selections, apply coupons and checkout securely." },
       { property: "og:title", content: "Your Bag — Luméa Jewellery" },
       { property: "og:description", content: "Review your selections and checkout securely." },

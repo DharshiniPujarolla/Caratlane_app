@@ -6,13 +6,13 @@ import { TileCard } from "@/components/Cards";
 export const Route = createFileRoute("/categories")({
   head: () => ({
     meta: [
-      { title: "Shop Jewellery Categories — Luméa" },
+      { title: "Shop Jewellery Categories — LumiAura" },
       {
         name: "description",
         content:
           "Browse rings, earrings, pendants, necklaces, bracelets, bangles and chains in gold and diamond.",
       },
-      { property: "og:title", content: "Shop Jewellery Categories — Luméa" },
+      { property: "og:title", content: "Shop Jewellery Categories — LumiAura" },
       {
         property: "og:description",
         content: "Rings, earrings, pendants, necklaces, bracelets and more.",

@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Secure Checkout — Luméa Jewellery" },
-      { name: "description", content: "Confirm your address, choose a payment method and place your Luméa order." },
-      { property: "og:title", content: "Secure Checkout — Luméa" },
+      { title: "Secure Checkout — LumiAura Jewellery" },
+      { name: "description", content: "Confirm your address, choose a payment method and place your LumiAura order." },
+      { property: "og:title", content: "Secure Checkout — LumiAura" },
       { property: "og:description", content: "Address, payment and order summary in one step." },
     ],
   }),

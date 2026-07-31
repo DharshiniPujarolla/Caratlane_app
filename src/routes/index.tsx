@@ -56,7 +56,7 @@ function BrandsSection() {
         Choose your world
       </p>
 
-      
+      <a
         href="#home-content"
         className="brand-card group relative block h-[38svh] overflow-hidden rounded-3xl shadow-float"
       >
@@ -179,23 +179,8 @@ function Index() {
           </button>
         </header>
 
-<<<<<<< HEAD
-    </div>
-    </div>
-        <button
-          onClick={() => navigate({ to: "/search" })}
-          className="press flex w-full items-center gap-2 rounded-full border border-border bg-muted/60 px-4 py-2.5 text-left"
-        >
-          <Search size={16} className="text-muted-foreground" />
-          <span className="text-[13px] text-muted-foreground">
-            Search for rings, earrings, gold chains…
-          </span>
-        </button>
-      </header>
-=======
         <BannerCarousel />
         <TryOnBanner />
->>>>>>> janie-ui-update
 
         <section className="px-4">
           <LumiMirrorCard />

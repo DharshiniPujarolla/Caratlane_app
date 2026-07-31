@@ -33,6 +33,31 @@ export default function SplashScreen() {
       {sparkles.map((star, index) => (
         <div
           key={index}
-          className="absolute text-[#E7B83F] font-bold select-none"
+          className="absolute text-[#E7B83F] font-bold select-none animate-pulse"
           style={{
             left: star.left,
+            top: star.top,
+            animationDelay: star.delay,
+            fontSize: star.size,
+          }}
+        >
+          ✦
+        </div>
+      ))}
+
+      <div className="relative z-10 flex flex-col items-center text-center">
+        <img
+          src={ring}
+          alt="Diamond Ring"
+          className="h-36 w-36 object-contain drop-shadow-xl animate-bounce"
+        />
+        <h1 className="mt-4 font-serif text-3xl font-bold tracking-wider text-[#8B263E]">
+          LumiAura
+        </h1>
+        <p className="mt-1 text-xs uppercase tracking-[0.25em] text-[#7A6860]">
+          Fine Diamond & Gold Jewellery
+        </p>
+      </div>
+    </div>
+  );
+}

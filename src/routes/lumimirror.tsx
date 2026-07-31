@@ -1,29 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Sparkles, Upload } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import pNecklace from "@/assets/p-necklace.jpg";
 import { JewelleryOverlay } from "@/components/lumimirror/JewelleryOverlay";
 import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import officeOutfit from "@/assets/lumimirror/outfits/office.svg";
-import casualOutfit from "@/assets/lumimirror/outfits/casual.svg";
-import traditionalOutfit from "@/assets/lumimirror/outfits/traditional.svg";
-import weddingOutfit from "@/assets/lumimirror/outfits/wedding.svg";
-import partyOutfit from "@/assets/lumimirror/outfits/party.svg";
+import { deriveFacePlacement, getFacePlacementFromImage } from "@/lib/lumimirror-overlay";
+import { getRecommendation } from "@/lib/lumimirror-recommend";
 
-const outfitPresets = [
-  { id: "office", label: "Office", src: officeOutfit },
-  { id: "casual", label: "Casual", src: casualOutfit },
-  { id: "traditional", label: "Traditional", src: traditionalOutfit },
-  { id: "wedding", label: "Wedding", src: weddingOutfit },
-  { id: "party", label: "Party", src: partyOutfit },
-] as const;
-
-type OutfitOption = {
-  id: string;
-  label: string;
-  src: string;
-};
+const occasionOptions = ["Office", "Casual", "Traditional", "Wedding"] as const;
+type OccasionOption = (typeof occasionOptions)[number];
 
 export const Route = createFileRoute("/lumimirror")({
   head: () => ({
@@ -41,27 +26,38 @@ export const Route = createFileRoute("/lumimirror")({
 function LumiMirrorPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState<"capture" | "result">("capture");
-  const [selectedOutfit, setSelectedOutfit] = useState<OutfitOption>(outfitPresets[0]);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedName, setUploadedName] = useState("Your selfie");
-  const [activeInput, setActiveInput] = useState<"selfie" | "outfit" | null>(null);
+  const [activeInput, setActiveInput] = useState<"selfie" | null>(null);
+  const [selectedOccasion, setSelectedOccasion] = useState<OccasionOption>("Office");
+  const [overlayPlacement, setOverlayPlacement] = useState<{
+    neckWidth: number;
+    anchorX: number;
+    anchorY: number;
+    faceHeight: number;
+    chinY: number;
+    neckLength: number;
+    visibleNeck: boolean;
+    message?: string;
+  } | null>(null);
 
   const necklaceOverlay = useMemo(() => pNecklace, []);
+  const recommendation = useMemo(() => getRecommendation({ occasion: selectedOccasion }), [selectedOccasion]);
 
   const handleFileUpload = (file?: File | null) => {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       const imageData = reader.result as string;
-      if (activeInput === "outfit") {
-        setSelectedOutfit({ id: "custom", label: "Custom outfit", src: imageData });
-        return;
-      }
-
       setPreviewImage(imageData);
       setUploadedName(file.name);
       setStep("result");
+
+      const placement = await getFacePlacementFromImage(imageData);
+      if (placement) {
+        setOverlayPlacement(placement);
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -71,10 +67,22 @@ function LumiMirrorPage() {
     setTimeout(() => fileInputRef.current?.click(), 0);
   };
 
-  const openOutfitPicker = () => {
-    setActiveInput("outfit");
-    setTimeout(() => fileInputRef.current?.click(), 0);
-  };
+  useEffect(() => {
+    if (!previewImage) {
+      return;
+    }
+
+    let cancelled = false;
+    getFacePlacementFromImage(previewImage).then((placement) => {
+      if (!cancelled && placement) {
+        setOverlayPlacement(placement);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [previewImage]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -146,8 +154,8 @@ function LumiMirrorPage() {
                     className="h-[420px] w-full"
                     overlayStyle={{
                       objectFit: "contain",
-                      transform: "translateY(6px) scale(0.84)",
                     }}
+                    placement={overlayPlacement}
                   />
                 ) : (
                   <div className="flex h-[420px] items-center justify-center rounded-[1.5rem] bg-muted text-sm text-muted-foreground">
@@ -158,59 +166,55 @@ function LumiMirrorPage() {
             </section>
 
             <section className="rounded-[1.5rem] border border-border bg-card p-4 shadow-soft">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                    Outfit styling
-                  </p>
-                  <h3 className="text-lg font-semibold">View with Different Outfits</h3>
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                  Recommended for you
+                </p>
+                <h3 className="text-lg font-semibold">Style picks for your moment</h3>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {occasionOptions.map((occasion) => (
+                  <button
+                    key={occasion}
+                    type="button"
+                    onClick={() => setSelectedOccasion(occasion)}
+                    className={`rounded-full border px-3 py-2 text-sm transition-all ${
+                      selectedOccasion === occasion
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-background text-foreground"
+                    }`}
+                  >
+                    {occasion}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4 rounded-[1.25rem] border border-border bg-background p-4">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={recommendation.jewel.image}
+                    alt={recommendation.jewel.name}
+                    className="h-20 w-20 rounded-[1rem] object-cover"
+                  />
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                      Best match
+                    </p>
+                    <h4 className="text-base font-semibold">{recommendation.jewel.name}</h4>
+                    <p className="text-sm text-muted-foreground">
+                      {recommendation.jewel.category} · {recommendation.jewel.metal}
+                    </p>
+                  </div>
                 </div>
-                <Button variant="outline" onClick={openOutfitPicker} className="rounded-full">
-                  <Upload size={16} className="mr-2" />
-                  Upload Outfit
-                </Button>
-              </div>
 
-              <div className="mt-4">
-                <Carousel opts={{ align: "start", containScroll: "trimSnaps" }} className="w-full">
-                  <CarouselContent className="-ml-3">
-                    {outfitPresets.map((outfit) => (
-                      <CarouselItem key={outfit.id} className="pl-3 basis-[48%] sm:basis-[31%]">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedOutfit(outfit)}
-                          className={`w-full rounded-[1.25rem] border p-2 text-left transition-all ${
-                            selectedOutfit.id === outfit.id
-                              ? "border-primary bg-primary/8"
-                              : "border-border bg-background"
-                          }`}
-                        >
-                          <img
-                            src={outfit.src}
-                            alt={outfit.label}
-                            className="h-24 w-full rounded-[1rem] object-cover"
-                          />
-                          <p className="mt-2 text-sm font-semibold">{outfit.label}</p>
-                        </button>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-0 top-1/2 -translate-y-1/2" />
-                  <CarouselNext className="right-0 top-1/2 -translate-y-1/2" />
-                </Carousel>
-              </div>
-
-              <div className="mt-4">
-                <JewelleryOverlay
-                  src={selectedOutfit.src}
-                  alt={`${selectedOutfit.label} outfit preview`}
-                  overlaySrc={necklaceOverlay}
-                  className="h-[320px] w-full"
-                  overlayStyle={{
-                    objectFit: "contain",
-                    transform: "translateY(4px) scale(0.8)",
-                  }}
-                />
+                <div className="mt-4 space-y-3">
+                  <p className="text-sm text-muted-foreground">{recommendation.whyThis}</p>
+                  <div className="rounded-[1rem] bg-muted p-3 text-sm text-foreground">
+                    <p className="font-semibold">Style note</p>
+                    <p className="mt-1">{recommendation.outfitSuggestion}</p>
+                  </div>
+                </div>
               </div>
             </section>
           </div>

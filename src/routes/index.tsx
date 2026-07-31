@@ -6,6 +6,8 @@ import { CategoryCircle, OfferCard, TileCard } from "@/components/Cards";
 import { SectionHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
+import SplashScreen from "@/components/SplashScreen";
+
 import {
   categories,
   collections,

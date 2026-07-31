@@ -122,8 +122,7 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout", "/brands", "/shaya"];
-
+const FULL_BLEED = ["/", "/splash", "/auth", "/product", "/checkout", "/brands", "/shaya"];
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });

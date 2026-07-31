@@ -30,6 +30,8 @@
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-rose: var(--rose);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
   --color-success: var(--success);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);

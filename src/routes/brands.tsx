@@ -44,7 +44,14 @@ function Brands() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
           <div>
-            <h2 className="font-display text-2xl font-bold tracking-wide text-primary-foreground">
+            <h2
+className="
+font-display
+text-3xl
+font-semibold
+tracking-[0.25em]
+"
+>
               LumiAura
             </h2>
             <p className="mt-1 text-[11px] uppercase tracking-[0.25em] text-gold-soft">

@@ -1,3 +1,4 @@
+import { Navigate } from "@tanstack/react-router";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { BannerCarousel } from "@/components/BannerCarousel";
@@ -5,6 +6,8 @@ import { CategoryCircle, OfferCard, TileCard } from "@/components/Cards";
 import { SectionHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
+import SplashScreen from "@/components/SplashScreen";
+
 import {
   categories,
   collections,

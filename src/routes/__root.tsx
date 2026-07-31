@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/BottomNav";
+import { ConciergeFab } from "@/components/ConciergeFab";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -121,12 +122,13 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout"];
+const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout", "/brands", "/shaya"];
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
+  const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -136,6 +138,7 @@ function RootComponent() {
           <Outlet />
         </div>
         {!bare && <BottomNav />}
+        {!splashLike && <ConciergeFab />}
       </div>
       <Toaster position="top-center" />
     </QueryClientProvider>

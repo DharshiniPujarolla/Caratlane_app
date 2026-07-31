@@ -1,17 +1,14 @@
 import { useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import ring from "@/assets/splash-ring.png";
 
 export default function SplashScreen() {
-  const navigate = useNavigate();
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate({ to: "/brands" });
+      document.getElementById("brands-section")?.scrollIntoView({ behavior: "smooth" });
     }, 2500);
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, []);
 
   const sparkles = [
     { left: "8%", top: "12%", delay: "0s", size: "18px" },
@@ -30,54 +27,12 @@ export default function SplashScreen() {
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#FFF8F6] via-[#FDECEC] to-[#F9E5EA]">
-
-      {/* Background Glow */}
       <div className="absolute h-[420px] w-[420px] rounded-full bg-pink-200/40 blur-[120px]" />
-
       <div className="absolute h-[250px] w-[250px] rounded-full bg-yellow-100/70 blur-[90px]" />
 
-      {/* Sparkles */}
       {sparkles.map((star, index) => (
         <div
           key={index}
           className="absolute text-[#E7B83F] font-bold select-none"
           style={{
             left: star.left,
-            top: star.top,
-            fontSize: star.size,
-            animation: `twinkle 2.8s infinite`,
-            animationDelay: star.delay,
-          }}
-        >
-          ✦
-        </div>
-      ))}
-
-      {/* Ring Glow */}
-      <div className="absolute h-60 w-60 rounded-full bg-white/60 blur-[60px]" />
-
-      {/* Ring */}
-      <img
-        src={ring}
-        alt="Luxury Ring"
-        className="relative z-10 w-60 drop-shadow-[0_0_45px_rgba(255,215,0,0.45)]"
-        style={{
-          animation: "floatRing 4s ease-in-out infinite",
-        }}
-      />
-
-      {/* Logo */}
-      <h1 className="text-5xl font-bold tracking-widest">
-  LumiAura
-</h1>
-
-      {/* Subtitle */}
-      <p className="relative z-10 mt-4 text-center text-sm uppercase tracking-[0.45em] text-[#7C6168]">
-        Your Next Premium Jewellery Experience
-      </p>
-
-      {/* Bottom Glow */}
-      <div className="absolute bottom-[-120px] h-[260px] w-[600px] rounded-full bg-pink-100 blur-[120px]" />
-    </div>
-  );
-}

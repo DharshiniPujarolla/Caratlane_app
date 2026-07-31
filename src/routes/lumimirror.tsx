@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Camera, Sparkles, Upload } from "lucide-react";
+import { ArrowLeft, Sparkles, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import pNecklace from "@/assets/p-necklace.jpg";
 import { JewelleryOverlay } from "@/components/lumimirror/JewelleryOverlay";
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/lumimirror")({
       { title: "LumiMirror — Try on jewellery" },
       {
         name: "description",
-        content: "Try on jewellery with camera, upload, and outfit presets in LumiMirror.",
+        content: "Try on jewellery with upload and outfit presets in LumiMirror.",
       },
     ],
   }),
@@ -42,11 +42,9 @@ function LumiMirrorPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState<"capture" | "result">("capture");
   const [selectedOutfit, setSelectedOutfit] = useState<OutfitOption>(outfitPresets[0]);
-  const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedName, setUploadedName] = useState("Your selfie");
   const [activeInput, setActiveInput] = useState<"selfie" | "outfit" | null>(null);
-  const [captureMode, setCaptureMode] = useState<"environment" | "user" | undefined>("environment");
 
   const necklaceOverlay = useMemo(() => pNecklace, []);
 
@@ -61,7 +59,6 @@ function LumiMirrorPage() {
         return;
       }
 
-      setSourceImage(imageData);
       setPreviewImage(imageData);
       setUploadedName(file.name);
       setStep("result");
@@ -71,26 +68,12 @@ function LumiMirrorPage() {
 
   const openSelfiePicker = () => {
     setActiveInput("selfie");
-    setCaptureMode("user");
-    setTimeout(() => fileInputRef.current?.click(), 0);
-  };
-
-  const openCameraFlow = () => {
-    setActiveInput("selfie");
-    setCaptureMode("environment");
     setTimeout(() => fileInputRef.current?.click(), 0);
   };
 
   const openOutfitPicker = () => {
     setActiveInput("outfit");
-    setCaptureMode(undefined);
     setTimeout(() => fileInputRef.current?.click(), 0);
-  };
-
-  const handleTryOn = () => {
-    setPreviewImage(selectedOutfit.src);
-    setSourceImage(selectedOutfit.src);
-    setStep("result");
   };
 
   return (
@@ -115,7 +98,6 @@ function LumiMirrorPage() {
           type="file"
           accept="image/*"
           className="hidden"
-          capture={captureMode}
           onChange={(e) => {
             handleFileUpload(e.target.files?.[0]);
             e.target.value = "";
@@ -130,14 +112,10 @@ function LumiMirrorPage() {
                 <p className="text-sm font-semibold">Start with a photo</p>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                Use your camera or upload a selfie to preview your jewellery with a fresh look.
+                Upload a selfie to preview your jewellery with a fresh look.
               </p>
-              <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-                <Button onClick={openCameraFlow} className="rounded-full">
-                  <Camera size={16} className="mr-2" />
-                  Open Camera
-                </Button>
-                <Button variant="outline" onClick={openSelfiePicker} className="rounded-full">
+              <div className="mt-4">
+                <Button onClick={openSelfiePicker} className="rounded-full">
                   <Upload size={16} className="mr-2" />
                   Upload Selfie
                 </Button>

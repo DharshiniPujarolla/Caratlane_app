@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader, SectionHeader } from "@/components/PageHeader";
+import VirtualTryOn from "@/components/VirtualTryOn";
+import { Camera } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { ReviewCard } from "@/components/Cards";
 import type { Product } from "@/lib/data";
@@ -52,6 +54,8 @@ function ProductPage() {
   const [size, setSize] = useState(ringSizes[2]);
   const [zoom, setZoom] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+  const [showTryOn, setShowTryOn] = useState(false);
+const tryOnEligible = product.category === "Necklaces" || product.category === "Earrings";
   const [tab, setTab] = useState<"details" | "reviews">("details");
 
   useEffect(() => {
@@ -152,7 +156,14 @@ function ProductPage() {
           </div>
           <p className="text-[11px] text-muted-foreground">Inclusive of all taxes</p>
         </div>
-
+        {tryOnEligible && (
+          <button
+            onClick={() => setShowTryOn(true)}
+            className="press flex w-full items-center justify-center gap-2 rounded-2xl gradient-primary py-3 text-[13px] font-semibold text-primary-foreground"
+          >
+            <Camera size={16} /> Virtual Try-On
+          </button>
+        )}
         <div className="rounded-2xl border border-border bg-card p-3">
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-semibold">Size</p>
@@ -301,7 +312,20 @@ function ProductPage() {
           </div>
         </section>
       )}
-
+      {showTryOn && (
+        <div className="fixed inset-0 z-50 mx-auto flex max-w-[480px] flex-col items-center justify-center bg-black/90 px-4">
+          <VirtualTryOn
+            showNecklace={product.category === "Necklaces"}
+            showEarring={product.category === "Earrings"}
+          />
+          <button
+            onClick={() => setShowTryOn(false)}
+            className="press mt-5 rounded-xl bg-card px-6 py-2.5 text-sm font-semibold"
+          >
+            Close
+          </button>
+        </div>
+      )}
       {showGuide && (
         <div className="fixed inset-0 z-50 mx-auto max-w-[480px]">
           <div className="absolute inset-0 bg-black/40" onClick={() => setShowGuide(false)} />

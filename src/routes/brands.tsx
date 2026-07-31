@@ -31,7 +31,8 @@ function Brands() {
 
       <Link
         to="/"
-        className="press animate-fade-up relative block h-[38svh] overflow-hidden rounded-3xl shadow-card"
+        style={{ animationDelay: "80ms, 0ms" }}
+        className="animate-fade-up float-card relative block h-[38svh] overflow-hidden rounded-3xl shadow-float"
       >
         <img
           src={lumiauraImg}

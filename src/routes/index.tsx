@@ -1,6 +1,7 @@
 import { TryOnBanner } from "@/components/TryOnBanner";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";
 import { CategoryCircle, OfferCard, TileCard } from "@/components/Cards";
 import { SectionHeader } from "@/components/PageHeader";
@@ -9,6 +10,10 @@ import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import SplashScreen from "@/components/SplashScreen";
 import lumiauraImg from "@/assets/brand-lumiaura.jpg";
 import shayaImg from "@/assets/brand-shaya.jpg";
+import { DailySparkModal } from "@/components/DailySparkModal";
+import { StreakBadge } from "@/components/StreakBadge";
+import { BottomNav } from "@/components/BottomNav";
+import { ConciergeFab } from "@/components/ConciergeFab";
 
 import {
   categories,
@@ -119,6 +124,21 @@ function Index() {
   const cart = useStore((s) => s.cart);
   const wish = useStore((s) => s.wishlist.length);
 
+  const [showBottomNav, setShowBottomNav] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowBottomNav(true);
+      } else {
+        setShowBottomNav(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const trending = products.slice(0, 6);
   const newArrivals = products.filter((p) => p.tags.includes("New Arrival")).slice(0, 6);
   const bestSellers = products.filter((p) => p.tags.includes("Best Seller")).slice(0, 6);
@@ -128,9 +148,10 @@ function Index() {
   return (
     <div className="mx-auto max-w-7xl">
       <SplashScreen />
+      <DailySparkModal />
       <BrandsSection />
 
-      <div id="home-content" className="space-y-7 lg:space-y-10">
+      <div id="home-content" className="space-y-7 lg:space-y-10 pb-24">
         <header className="glass sticky top-0 z-40 space-y-3 px-4 lg:px-8 pb-3 pt-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
@@ -150,7 +171,9 @@ function Index() {
               </button>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
+              <StreakBadge />
+
               <Link
                 to="/wishlist"
                 className="press relative flex h-10 w-10 items-center justify-center rounded-full bg-secondary"
@@ -266,7 +289,7 @@ function Index() {
                 className="press flex h-20 w-[130px] shrink-0 flex-col justify-center rounded-2xl border border-border bg-card px-3 shadow-soft"
               >
                 <span className="text-[13px] font-semibold">{b.label}</span>
-                <span className="text-[11px] text-muted-foreground">Explore designs</span>
+                <span className="text-[11px] text-[#8C7A70]">Explore designs</span>
               </Link>
             ))}
           </Row>
@@ -355,6 +378,12 @@ function Index() {
           </Link>
         </footer>
       </div>
+
+      {/* Navigation tab reveals when scrolling down */}
+      {showBottomNav && <BottomNav />}
+
+      {/* Voice Assistant is always visible on the landing page */}
+      <ConciergeFab />
     </div>
   );
 }

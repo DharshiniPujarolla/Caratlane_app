@@ -9,7 +9,7 @@ export const Route = createFileRoute("/orders")({
     meta: [
       { title: "My Orders — LumiAura Jewellery" },
       { name: "description", content: "Track active orders, review past purchases and manage cancellations." },
-      { property: "og:title", content: "My Orders — LumiMura Jewellery" },
+      { property: "og:title", content: "My Orders — LumiAura Jewellery" },
       { property: "og:description", content: "Track and manage your LumiAura orders." },
     ],
   }),

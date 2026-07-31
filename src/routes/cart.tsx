@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cart")({
     meta: [
       { title: "Your Bag — LumiAura Jewellery" },
       { name: "description", content: "Review your jewellery selections, apply coupons and checkout securely." },
-      { property: "og:title", content: "Your Bag — Luméa Jewellery" },
+      { property: "og:title", content: "Your Bag — LumiAura Jewellery" },
       { property: "og:description", content: "Review your selections and checkout securely." },
     ],
   }),

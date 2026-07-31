@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/stores")({
   head: () => ({
     meta: [
-      { title: "Store Locator — Luméa Jewellery" },
-      { name: "description", content: "Find a Luméa boutique near you and book a personal styling appointment." },
-      { property: "og:title", content: "Store Locator — Luméa Jewellery" },
+      { title: "Store Locator — LumiAura Jewellery" },
+      { name: "description", content: "Find a LumiAura boutique near you and book a personal styling appointment." },
+      { property: "og:title", content: "Store Locator — LumiAura Jewellery" },
       { property: "og:description", content: "Nearby boutiques, timings and appointment booking." },
     ],
   }),

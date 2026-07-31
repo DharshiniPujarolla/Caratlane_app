@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate, notFound } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronRight,
   Heart,
@@ -30,13 +30,13 @@ export const Route = createFileRoute("/product/$id")({
   },
   head: ({ loaderData }) => {
     if (!loaderData)
-      return { meta: [{ title: "Unavailable — Luméa" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Unavailable — LumiAura" }, { name: "robots", content: "noindex" }] };
     const p = loaderData.product;
     return {
       meta: [
-        { title: `${p.name} — ${inr(p.price)} | Luméa` },
+        { title: `${p.name} — ${inr(p.price)} | LumiAura` },
         { name: "description", content: `${p.name} in ${p.purity} ${p.metal}. ${p.description.slice(0, 110)}` },
-        { property: "og:title", content: `${p.name} — Luméa` },
+        { property: "og:title", content: `${p.name} — LumiAura` },
         { property: "og:description", content: `${p.purity} ${p.metal} · ${inr(p.price)}` },
       ],
     };
@@ -51,6 +51,7 @@ function ProductPage() {
   const navigate = useNavigate();
   const saved = useStore((s) => s.wishlist.includes(product.id));
   const [slide, setSlide] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(ringSizes[2]);
   const [zoom, setZoom] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
@@ -61,6 +62,10 @@ const tryOnEligible = product.category === "Necklaces" || product.category === "
   useEffect(() => {
     actions.view(product.id);
     setSlide(0);
+
+    if (galleryRef.current) {
+      galleryRef.current.scrollLeft = 0;
+    }
   }, [product.id]);
 
   const similar = products.filter((p) => p.category === product.category && p.id !== product.id);
@@ -88,6 +93,7 @@ const tryOnEligible = product.category === "Necklaces" || product.category === "
 
       <div className="relative">
         <div
+          ref={galleryRef}
           onScroll={(e) => setSlide(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
           className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto bg-muted"
         >

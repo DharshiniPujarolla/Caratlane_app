@@ -12,7 +12,7 @@ type State = {
   giftWrap: boolean;
 };
 
-const KEY = "lumea-state-v1";
+const KEY = "lumiaura-state-v1";
 
 const initial: State = {
   wishlist: [],

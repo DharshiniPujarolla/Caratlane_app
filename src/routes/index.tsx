@@ -37,7 +37,9 @@ export const Route = createFileRoute("/")({
 
 function Row({ children }: { children: React.ReactNode }) {
   return (
-    <div className="no-scrollbar flex gap-3 overflow-x-auto px-4 pb-1">{children}</div>
+    <div className="no-scrollbar flex gap-4 overflow-x-auto px-4 lg:px-8 pb-1">
+      {children}
+    </div>
   );
 }
 
@@ -54,34 +56,49 @@ function Index() {
   const continueItem = cart[0] ? findProduct(cart[0].id) : undefined;
 
   return (
-    <div className="space-y-7">
-      <header className="glass sticky top-0 z-40 space-y-3 px-4 pb-3 pt-4">
+    <div className="mx-auto max-w-7xl space-y-7 lg:space-y-10">
+      <header className="glass sticky top-0 z-40 space-y-3 px-4 lg:px-8 pb-3 pt-4">
         <div className="flex items-center justify-between">
-          <button className="press flex items-center gap-1.5 text-left">
-            <MapPin size={16} className="text-primary" />
-            <span className="text-[13px] font-semibold">Bengaluru, 560038</span>
-            <ChevronDown size={14} className="text-muted-foreground" />
-          </button>
-          <div className="flex items-center gap-1">
-            <Link
-              to="/wishlist"
-              aria-label="Wishlist"
-              className="press relative flex h-9 w-9 items-center justify-center rounded-full bg-secondary"
-            >
-              <Heart size={17} />
-              {wish > 0 && (
-                <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-primary" />
-              )}
+          <div className="flex items-center gap-6">
+
+            <Link to="/" className="flex flex-col">
+              <h1 className="font-display text-3xl font-bold text-primary">
+                LumiAura
+              </h1>
+              <span className="text-xs text-muted-foreground">
+                Fine Diamond & Gold Jewellery
+              </span>
             </Link>
-            <button
-              aria-label="Notifications"
-              className="press relative flex h-9 w-9 items-center justify-center rounded-full bg-secondary"
-            >
-              <Bell size={17} />
-              <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
+
+            <button className="press flex items-center gap-1.5">
+              <MapPin size={16} className="text-primary" />
+              <span className="text-sm font-semibold">
+                Chennai
+              </span>
+              <ChevronDown size={14} className="text-muted-foreground" />
             </button>
-          </div>
+
         </div>
+
+        <div className="flex items-center gap-3">
+
+          <Link
+            to="/wishlist"
+            className="press relative flex h-10 w-10 items-center justify-center rounded-full bg-secondary"
+          >
+            <Heart size={18} />
+            {wish > 0 && (
+              <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-primary" />
+            )}
+          </Link>
+
+          <button className="press relative flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
+            <Bell size={18} />
+            <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
+          </button>
+
+      </div>
+    </div>
         <button
           onClick={() => navigate({ to: "/search" })}
           className="press flex w-full items-center gap-2 rounded-full border border-border bg-muted/60 px-4 py-2.5 text-left"

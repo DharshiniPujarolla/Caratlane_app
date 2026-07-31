@@ -18,6 +18,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as ShayaRouteImport } from './routes/shaya'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as StoresRouteImport } from './routes/stores'
 import { Route as WishlistRouteImport } from './routes/wishlist'
@@ -69,6 +70,11 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShayaRoute = ShayaRouteImport.update({
+  id: '/shaya',
+  path: '/shaya',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SplashRoute = SplashRouteImport.update({
   id: '/splash',
   path: '/splash',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/profile'
     | '/search'
+    | '/shaya'
     | '/splash'
     | '/stores'
     | '/wishlist'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/profile'
     | '/search'
+    | '/shaya'
     | '/splash'
     | '/stores'
     | '/wishlist'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/profile'
     | '/search'
+    | '/shaya'
     | '/splash'
     | '/stores'
     | '/wishlist'
@@ -205,6 +217,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
   SearchRoute: typeof SearchRoute
+  ShayaRoute: typeof ShayaRoute
   SplashRoute: typeof SplashRoute
   StoresRoute: typeof StoresRoute
   WishlistRoute: typeof WishlistRoute
@@ -277,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shaya': {
+      id: '/shaya'
+      path: '/shaya'
+      fullPath: '/shaya'
+      preLoaderRoute: typeof ShayaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/splash': {
       id: '/splash'
       path: '/splash'
@@ -325,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
   SearchRoute: SearchRoute,
+  ShayaRoute: ShayaRoute,
   SplashRoute: SplashRoute,
   StoresRoute: StoresRoute,
   WishlistRoute: WishlistRoute,

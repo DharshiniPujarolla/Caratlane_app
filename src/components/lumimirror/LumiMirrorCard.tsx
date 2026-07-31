@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Camera, Sparkles, Upload } from "lucide-react";
+import { Sparkles, Upload } from "lucide-react";
 
 export function LumiMirrorCard() {
   return (
@@ -16,19 +16,12 @@ export function LumiMirrorCard() {
             See how your look changes with a tap
           </h3>
           <p className="mt-1 text-sm text-primary-foreground/80">
-            Try on styles instantly with your camera or a selfie.
+            Try on styles instantly with a selfie.
           </p>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-        <Link
-          to="/lumimirror"
-          className="press inline-flex items-center justify-center rounded-full bg-background px-4 py-2.5 text-sm font-semibold text-primary"
-        >
-          <Camera size={16} className="mr-2" />
-          Open Camera
-        </Link>
+      <div className="mt-4">
         <Link
           to="/lumimirror"
           className="press inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-4 py-2.5 text-sm font-semibold text-primary-foreground"

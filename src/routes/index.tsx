@@ -101,7 +101,7 @@ function Index() {
             <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
           </button>
 
-      </div>
+    </div>
     </div>
         <button
           onClick={() => navigate({ to: "/search" })}

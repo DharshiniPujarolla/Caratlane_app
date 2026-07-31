@@ -1,4 +1,4 @@
-# Lumea
+# LumiAura
 
 Design and develop a premium luxury jewelry shopping mobile application inspired by the CaratLane experience. The UI should follow the same design language, user flow, navigation hierarchy, color palette, premium feel, and shopping experience as CaratLane, while using original assets and implementation.
 

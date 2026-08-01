@@ -81,62 +81,67 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
       ctx.clearRect(0, 0, cssWidth, cssHeight);
       ctx.drawImage(video, 0, 0, cssWidth, cssHeight);
 
-      const results = faceLandmarker.detectForVideo(video, performance.now());
-      if (results.faceLandmarks.length > 0) {
-        const landmarks = results.faceLandmarks[0];
-        const leftEar = landmarks[EARRING_LANDMARK_LEFT_IDX];
-        const rightEar = landmarks[EARRING_LANDMARK_RIGHT_IDX];
-        const chin = landmarks[152];
-        const leftJaw = landmarks[172];
-        const rightJaw = landmarks[397];
-        const jewelryImg = jewelryImageRef.current;
+      try {
+        const results = faceLandmarker.detectForVideo(video, performance.now());
+        if (results.faceLandmarks.length > 0) {
+          const landmarks = results.faceLandmarks[0];
+          const leftEar = landmarks[EARRING_LANDMARK_LEFT_IDX];
+          const rightEar = landmarks[EARRING_LANDMARK_RIGHT_IDX];
+          const chin = landmarks[152];
+          const leftJaw = landmarks[172];
+          const rightJaw = landmarks[397];
+          const jewelryImg = jewelryImageRef.current;
 
-        if (jewelryImg?.complete) {
-          if (jewelryType === "earring") {
-            const size = cssWidth * EARRING_SIZE_MULT;
-            const tilt = Math.atan2(rightEar.y - leftEar.y, rightEar.x - leftEar.x);
-            const renderEarring = (x: number, y: number) => {
+          if (jewelryImg?.complete) {
+            if (jewelryType === "earring") {
+              const size = cssWidth * EARRING_SIZE_MULT;
+              const renderEarring = (x: number, y: number) => {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.shadowColor = "rgba(15, 23, 42, 0.3)";
+                ctx.shadowBlur = 14;
+                ctx.shadowOffsetY = 8;
+                ctx.globalAlpha = 0.96;
+                ctx.drawImage(jewelryImg, -size / 2, 0, size, size * 1.4);
+                ctx.restore();
+              };
+              renderEarring(
+                leftEar.x * cssWidth,
+                leftEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
+              );
+              renderEarring(
+                rightEar.x * cssWidth,
+                rightEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
+              );
+            }
+
+            if (jewelryType === "necklace") {
+              const jawWidth = Math.abs(rightJaw.x - leftJaw.x) * cssWidth;
+              const width = Math.max(120, Math.min(cssWidth * 0.9, jawWidth * NECKLACE_WIDTH_MULT));
+              const height = Math.max(80, Math.min(cssHeight * 0.36, width * NECKLACE_HEIGHT_RATIO));
+              const topY = chin.y * cssHeight + NECKLACE_VERTICAL_GAP * cssHeight;
+              const centerX = chin.x * cssWidth;
+              const centerY = topY + height * 0.55;
+              const tilt = Math.atan2(rightJaw.y - leftJaw.y, rightJaw.x - leftJaw.x);
+
               ctx.save();
-              ctx.translate(x, y);
+              ctx.translate(centerX, centerY);
               ctx.rotate(tilt * 0.2);
-              ctx.shadowColor = "rgba(15, 23, 42, 0.3)";
-              ctx.shadowBlur = 14;
-              ctx.shadowOffsetY = 8;
+              ctx.transform(1, 0.04, 0.02, 1, 0, 0);
+              ctx.shadowColor = "rgba(15, 23, 42, 0.34)";
+              ctx.shadowBlur = 16;
+              ctx.shadowOffsetY = 10;
               ctx.globalAlpha = 0.96;
-              ctx.drawImage(jewelryImg, -size / 2, -size * 0.1, size, size * 1.4);
+              ctx.drawImage(jewelryImg, -width / 2, -height / 2, width, height);
               ctx.restore();
-            };
-            renderEarring(
-              leftEar.x * cssWidth,
-              leftEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
-            );
-            renderEarring(
-              rightEar.x * cssWidth,
-              rightEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
-            );
-          }
-
-          if (jewelryType === "necklace") {
-            const jawWidth = Math.abs(rightJaw.x - leftJaw.x) * cssWidth;
-            const width = Math.max(120, Math.min(cssWidth * 0.9, jawWidth * NECKLACE_WIDTH_MULT));
-            const height = Math.max(80, Math.min(cssHeight * 0.36, width * NECKLACE_HEIGHT_RATIO));
-            const topY = chin.y * cssHeight + NECKLACE_VERTICAL_GAP * cssHeight;
-            const centerX = chin.x * cssWidth;
-            const centerY = topY + height * 0.55;
-            const tilt = Math.atan2(rightJaw.y - leftJaw.y, rightJaw.x - leftJaw.x);
-
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.rotate(tilt * 0.2);
-            ctx.transform(1, 0.04, 0.02, 1, 0, 0);
-            ctx.shadowColor = "rgba(15, 23, 42, 0.34)";
-            ctx.shadowBlur = 16;
-            ctx.shadowOffsetY = 10;
-            ctx.globalAlpha = 0.96;
-            ctx.drawImage(jewelryImg, -width / 2, -height / 2, width, height);
-            ctx.restore();
+            }
           }
         }
+      } catch (error) {
+        console.error("[VirtualTryOn] Frame render failed", {
+          jewelryType,
+          error,
+        });
       }
 
       if (isActive) {

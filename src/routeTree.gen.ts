@@ -15,6 +15,8 @@ import { Route as BrandsRouteImport } from './routes/brands'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as LumiaiRouteImport } from './routes/lumiai'
 import { Route as LumimirrorRouteImport } from './routes/lumimirror'
 import { Route as LumisignatureRouteImport } from './routes/lumisignature'
 import { Route as OrdersRouteImport } from './routes/orders'
@@ -23,6 +25,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShayaRouteImport } from './routes/shaya'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as StoresRouteImport } from './routes/stores'
+import { Route as StyleMissionRouteImport } from './routes/style-mission'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ApiLumimirrorGenerateRouteImport } from './routes/api/lumimirror-generate'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -57,6 +60,16 @@ const CategoriesRoute = CategoriesRouteImport.update({
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LumiaiRoute = LumiaiRouteImport.update({
+  id: '/lumiai',
+  path: '/lumiai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LumimirrorRoute = LumimirrorRouteImport.update({
@@ -99,6 +112,11 @@ const StoresRoute = StoresRouteImport.update({
   path: '/stores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StyleMissionRoute = StyleMissionRouteImport.update({
+  id: '/style-mission',
+  path: '/style-mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
@@ -132,6 +150,8 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
+  '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -140,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -153,6 +174,8 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
+  '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -161,6 +184,7 @@ export interface FileRoutesByTo {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -175,6 +199,8 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
+  '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -183,6 +209,7 @@ export interface FileRoutesById {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -198,6 +225,8 @@ export interface FileRouteTypes {
     | '/cart'
     | '/categories'
     | '/checkout'
+    | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -206,6 +235,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -219,6 +249,8 @@ export interface FileRouteTypes {
     | '/cart'
     | '/categories'
     | '/checkout'
+    | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -227,6 +259,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -240,6 +273,8 @@ export interface FileRouteTypes {
     | '/cart'
     | '/categories'
     | '/checkout'
+    | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -248,6 +283,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -262,6 +298,8 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   CategoriesRoute: typeof CategoriesRoute
   CheckoutRoute: typeof CheckoutRoute
+  JourneyRoute: typeof JourneyRoute
+  LumiaiRoute: typeof LumiaiRoute
   LumimirrorRoute: typeof LumimirrorRoute
   LumisignatureRoute: typeof LumisignatureRouteWithChildren
   OrdersRoute: typeof OrdersRoute
@@ -270,6 +308,7 @@ export interface RootRouteChildren {
   ShayaRoute: typeof ShayaRoute
   SplashRoute: typeof SplashRoute
   StoresRoute: typeof StoresRoute
+  StyleMissionRoute: typeof StyleMissionRoute
   WishlistRoute: typeof WishlistRoute
   ApiLumimirrorGenerateRoute: typeof ApiLumimirrorGenerateRoute
   CategorySlugRoute: typeof CategorySlugRoute
@@ -318,6 +357,20 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lumiai': {
+      id: '/lumiai'
+      path: '/lumiai'
+      fullPath: '/lumiai'
+      preLoaderRoute: typeof LumiaiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lumimirror': {
@@ -374,6 +427,13 @@ declare module '@tanstack/react-router' {
       path: '/stores'
       fullPath: '/stores'
       preLoaderRoute: typeof StoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/style-mission': {
+      id: '/style-mission'
+      path: '/style-mission'
+      fullPath: '/style-mission'
+      preLoaderRoute: typeof StyleMissionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wishlist': {
@@ -433,6 +493,8 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   CategoriesRoute: CategoriesRoute,
   CheckoutRoute: CheckoutRoute,
+  JourneyRoute: JourneyRoute,
+  LumiaiRoute: LumiaiRoute,
   LumimirrorRoute: LumimirrorRoute,
   LumisignatureRoute: LumisignatureRouteWithChildren,
   OrdersRoute: OrdersRoute,
@@ -441,6 +503,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShayaRoute: ShayaRoute,
   SplashRoute: SplashRoute,
   StoresRoute: StoresRoute,
+  StyleMissionRoute: StyleMissionRoute,
   WishlistRoute: WishlistRoute,
   ApiLumimirrorGenerateRoute: ApiLumimirrorGenerateRoute,
   CategorySlugRoute: CategorySlugRoute,
@@ -449,13 +512,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

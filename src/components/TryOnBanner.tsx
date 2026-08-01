@@ -6,7 +6,7 @@ export function TryOnBanner() {
     <Link
       to="/product/$id"
       params={{ id: "necklaces-1" }}
-      className="press mx-4 mt-4 block overflow-hidden rounded-2xl bg-gradient-to-r from-purple-700 via-fuchsia-600 to-amber-500 p-4 text-white shadow-card"
+      className="press mx-4 mt-4 block h-full min-h-[220px] flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-purple-700 via-fuchsia-600 to-amber-500 p-4 text-white shadow-card"
     >
       <div className="flex items-center justify-between">
         <div>

@@ -291,6 +291,11 @@ function Index() {
           </Link>
         </section>
 
+        <section className="px-4">
+          <StyleMissionCard />
+        </section>
+
+
         <section>
           <SectionHeader title="Shop by Category" to="/categories" />
           <Row>

@@ -25,6 +25,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShayaRouteImport } from './routes/shaya'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as StoresRouteImport } from './routes/stores'
+import { Route as StyleMissionRouteImport } from './routes/style-mission'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ApiLumimirrorGenerateRouteImport } from './routes/api/lumimirror-generate'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -111,6 +112,11 @@ const StoresRoute = StoresRouteImport.update({
   path: '/stores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StyleMissionRoute = StyleMissionRouteImport.update({
+  id: '/style-mission',
+  path: '/style-mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/shaya': typeof ShayaRoute
   '/splash': typeof SplashRoute
   '/stores': typeof StoresRoute
+  '/style-mission': typeof StyleMissionRoute
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -272,6 +283,7 @@ export interface FileRouteTypes {
     | '/shaya'
     | '/splash'
     | '/stores'
+    | '/style-mission'
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   ShayaRoute: typeof ShayaRoute
   SplashRoute: typeof SplashRoute
   StoresRoute: typeof StoresRoute
+  StyleMissionRoute: typeof StyleMissionRoute
   WishlistRoute: typeof WishlistRoute
   ApiLumimirrorGenerateRoute: typeof ApiLumimirrorGenerateRoute
   CategorySlugRoute: typeof CategorySlugRoute
@@ -416,6 +429,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/style-mission': {
+      id: '/style-mission'
+      path: '/style-mission'
+      fullPath: '/style-mission'
+      preLoaderRoute: typeof StyleMissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wishlist': {
       id: '/wishlist'
       path: '/wishlist'
@@ -483,6 +503,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShayaRoute: ShayaRoute,
   SplashRoute: SplashRoute,
   StoresRoute: StoresRoute,
+  StyleMissionRoute: StyleMissionRoute,
   WishlistRoute: WishlistRoute,
   ApiLumimirrorGenerateRoute: ApiLumimirrorGenerateRoute,
   CategorySlugRoute: CategorySlugRoute,

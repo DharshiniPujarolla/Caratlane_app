@@ -15,7 +15,7 @@ type GeminiInlineDataPart = {
 
 async function getGeminiApiKey(): Promise<string | undefined> {
   try {
-    const cloudflareModule = await import("cloudflare:workers");
+    const cloudflareModule = await import(/* @vite-ignore */ "cloudflare:workers" as string);
     const cloudflareEnv = (cloudflareModule as { env?: Record<string, string | undefined> }).env;
     const fromWorkersEnv = cloudflareEnv?.GEMINI_API_KEY;
 

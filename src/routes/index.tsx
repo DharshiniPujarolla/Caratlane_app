@@ -209,6 +209,39 @@ function Index() {
           <LumiMirrorCard />
         </section>
 
+        <section className="px-4">
+          <Link
+            to="/lumisignature"
+            className="press block overflow-hidden rounded-3xl bg-gradient-to-r from-violet-700 via-fuchsia-600 to-pink-500 p-6 text-white shadow-float"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] opacity-80">
+                  ✨ LUMISIGNATURE™
+                </p>
+
+                <h2 className="mt-2 text-2xl font-bold">
+                  Discover Your Jewellery DNA
+                </h2>
+
+                <p className="mt-2 max-w-md text-sm text-white/90">
+                  Answer 5 quick questions and uncover the jewellery style that
+                  matches your personality.
+                </p>
+
+                <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-violet-700">
+                  Discover My DNA
+                <ArrowRight size={16} />
+                </div>
+              </div>
+
+              <div className="hidden md:flex items-center justify-center text-7xl opacity-30">
+              🧬
+              </div>
+            </div>
+          </Link>
+        </section>
+
         <section>
           <SectionHeader title="Shop by Category" to="/categories" />
           <Row>

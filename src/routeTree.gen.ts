@@ -16,6 +16,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as LumimirrorRouteImport } from './routes/lumimirror'
+import { Route as LumisignatureRouteImport } from './routes/lumisignature'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SearchRouteImport } from './routes/search'
@@ -24,6 +25,7 @@ import { Route as SplashRouteImport } from './routes/splash'
 import { Route as StoresRouteImport } from './routes/stores'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as LumisignatureQuizRouteImport } from './routes/lumisignature/quiz'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +61,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const LumimirrorRoute = LumimirrorRouteImport.update({
   id: '/lumimirror',
   path: '/lumimirror',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LumisignatureRoute = LumisignatureRouteImport.update({
+  id: '/lumisignature',
+  path: '/lumisignature',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrdersRoute = OrdersRouteImport.update({
@@ -101,6 +108,11 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LumisignatureQuizRoute = LumisignatureQuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => LumisignatureRoute,
+} as any)
 const ProductIdRoute = ProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
@@ -115,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/lumimirror': typeof LumimirrorRoute
+  '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
@@ -123,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +147,7 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/lumimirror': typeof LumimirrorRoute
+  '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
@@ -141,6 +156,7 @@ export interface FileRoutesByTo {
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
@@ -152,6 +168,7 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/lumimirror': typeof LumimirrorRoute
+  '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
@@ -160,6 +177,7 @@ export interface FileRoutesById {
   '/stores': typeof StoresRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
@@ -172,6 +190,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/lumimirror'
+    | '/lumisignature'
     | '/orders'
     | '/profile'
     | '/search'
@@ -180,6 +199,7 @@ export interface FileRouteTypes {
     | '/stores'
     | '/wishlist'
     | '/category/$slug'
+    | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -190,6 +210,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/lumimirror'
+    | '/lumisignature'
     | '/orders'
     | '/profile'
     | '/search'
@@ -198,6 +219,7 @@ export interface FileRouteTypes {
     | '/stores'
     | '/wishlist'
     | '/category/$slug'
+    | '/lumisignature/quiz'
     | '/product/$id'
   id:
     | '__root__'
@@ -208,6 +230,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/lumimirror'
+    | '/lumisignature'
     | '/orders'
     | '/profile'
     | '/search'
@@ -216,6 +239,7 @@ export interface FileRouteTypes {
     | '/stores'
     | '/wishlist'
     | '/category/$slug'
+    | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesById: FileRoutesById
 }
@@ -227,6 +251,7 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   CheckoutRoute: typeof CheckoutRoute
   LumimirrorRoute: typeof LumimirrorRoute
+  LumisignatureRoute: typeof LumisignatureRouteWithChildren
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
   SearchRoute: typeof SearchRoute
@@ -289,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LumimirrorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lumisignature': {
+      id: '/lumisignature'
+      path: '/lumisignature'
+      fullPath: '/lumisignature'
+      preLoaderRoute: typeof LumisignatureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/orders': {
       id: '/orders'
       path: '/orders'
@@ -345,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lumisignature/quiz': {
+      id: '/lumisignature/quiz'
+      path: '/quiz'
+      fullPath: '/lumisignature/quiz'
+      preLoaderRoute: typeof LumisignatureQuizRouteImport
+      parentRoute: typeof LumisignatureRoute
+    }
     '/product/$id': {
       id: '/product/$id'
       path: '/product/$id'
@@ -355,6 +394,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LumisignatureRouteChildren {
+  LumisignatureQuizRoute: typeof LumisignatureQuizRoute
+}
+
+const LumisignatureRouteChildren: LumisignatureRouteChildren = {
+  LumisignatureQuizRoute: LumisignatureQuizRoute,
+}
+
+const LumisignatureRouteWithChildren = LumisignatureRoute._addFileChildren(
+  LumisignatureRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
@@ -363,6 +414,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   CheckoutRoute: CheckoutRoute,
   LumimirrorRoute: LumimirrorRoute,
+  LumisignatureRoute: LumisignatureRouteWithChildren,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
   SearchRoute: SearchRoute,

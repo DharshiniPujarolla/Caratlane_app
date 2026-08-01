@@ -91,6 +91,12 @@ function LumiAI() {
           </Link>
 
           <Link
+            params={{ id: "necklaces-3" }}
+            icon={Camera}
+            title="Virtual Try-On"
+            description="Try necklaces and earrings virtually with a premium, instant styling preview."
+          />
+          <FeatureCard
             to="/lumimirror"
             className="group flex overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)]"
           >

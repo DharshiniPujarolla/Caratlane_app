@@ -3,7 +3,7 @@ import { Sparkles, Upload } from "lucide-react";
 
 export function LumiMirrorCard() {
   return (
-    <div className="overflow-hidden rounded-3xl gradient-primary p-5 text-primary-foreground shadow-soft">
+    <div className="h-full min-h-[220px] flex flex-col justify-between overflow-hidden rounded-3xl gradient-primary p-5 text-primary-foreground shadow-soft">
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <div className="flex items-center gap-2">

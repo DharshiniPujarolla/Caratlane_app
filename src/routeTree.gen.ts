@@ -16,6 +16,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as LumiaiRouteImport } from './routes/lumiai'
 import { Route as LumimirrorRouteImport } from './routes/lumimirror'
 import { Route as LumisignatureRouteImport } from './routes/lumisignature'
 import { Route as OrdersRouteImport } from './routes/orders'
@@ -63,6 +64,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const JourneyRoute = JourneyRouteImport.update({
   id: '/journey',
   path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LumiaiRoute = LumiaiRouteImport.update({
+  id: '/lumiai',
+  path: '/lumiai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LumimirrorRoute = LumimirrorRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
+  '/lumiai': typeof LumiaiRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout'
     | '/journey'
+    | '/lumiai'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   CheckoutRoute: typeof CheckoutRoute
   JourneyRoute: typeof JourneyRoute
+  LumiaiRoute: typeof LumiaiRoute
   LumimirrorRoute: typeof LumimirrorRoute
   LumisignatureRoute: typeof LumisignatureRouteWithChildren
   OrdersRoute: typeof OrdersRoute
@@ -338,6 +351,13 @@ declare module '@tanstack/react-router' {
       path: '/journey'
       fullPath: '/journey'
       preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lumiai': {
+      id: '/lumiai'
+      path: '/lumiai'
+      fullPath: '/lumiai'
+      preLoaderRoute: typeof LumiaiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lumimirror': {
@@ -454,6 +474,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   CheckoutRoute: CheckoutRoute,
   JourneyRoute: JourneyRoute,
+  LumiaiRoute: LumiaiRoute,
   LumimirrorRoute: LumimirrorRoute,
   LumisignatureRoute: LumisignatureRouteWithChildren,
   OrdersRoute: OrdersRoute,

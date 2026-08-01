@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, LayoutGrid, Package, Store, User } from "lucide-react";
+import { Home, LayoutGrid, Package, Sparkles, Store, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/", label: "Home", icon: Home },
+  { to: "/lumiai", label: "LumiAI", icon: Sparkles },
   { to: "/categories", label: "Categories", icon: LayoutGrid },
   { to: "/treasure-chest", label: "Treasure Chest", icon: Package },
   { to: "/stores", label: "Find Store", icon: Store },

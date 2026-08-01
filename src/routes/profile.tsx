@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { actions, useStore } from "@/lib/store";
+import { Link as RouterLink } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -72,6 +73,15 @@ function Profile() {
           ))}
         </div>
       </div>
+
+      <RouterLink to="/lumiaura-journey" className="mx-4 mt-4 flex items-center gap-3 rounded-2xl border border-[#efe7ff] bg-white p-3 shadow-[0_10px_30px_rgba(123,74,226,0.15)]">
+        <Gem size={18} className="text-[#7B4AE2]" />
+        <div className="min-w-0 flex-1">
+          <p className="text-[13px] font-semibold">LumiAura Journey</p>
+          <p className="text-[11px] text-muted-foreground">Track your XP, streaks and premium milestones.</p>
+        </div>
+        <ChevronRight size={16} className="text-muted-foreground" />
+      </RouterLink>
 
       <div className="mx-4 mt-4 flex items-center gap-3 rounded-2xl border border-gold/40 bg-gold-soft/60 p-3">
         <Gem size={18} className="text-[color:var(--gold)]" />

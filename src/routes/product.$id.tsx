@@ -67,6 +67,7 @@ function ProductPage() {
 
   useEffect(() => {
     actions.view(product.id);
+    actions.browseCollections();
     setSlide(0);
 
     if (galleryRef.current) {

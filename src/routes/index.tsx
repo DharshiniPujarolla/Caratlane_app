@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/ProductCard";
 import SplashScreen from "@/components/SplashScreen";
 import lumiauraImg from "@/assets/brand-lumiaura.jpg";
 import shayaImg from "@/assets/brand-shaya.jpg";
-import { DailySparkModal } from "@/components/DailySparkModal";
+import { LumiAuraQuestModal } from "@/components/LumiAuraQuestModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
@@ -25,7 +25,7 @@ import {
   priceBuckets,
   products,
 } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { actions, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -131,6 +131,8 @@ function Index() {
   const lumiAIPopupReshowTimeout = useRef<number | null>(null);
 
   useEffect(() => {
+    actions.initializeJourney();
+
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowBottomNav(true);
@@ -194,7 +196,7 @@ function Index() {
   return (
     <div className="mx-auto max-w-7xl">
       <SplashScreen />
-      <DailySparkModal />
+      <LumiAuraQuestModal />
       <BrandsSection />
 
       <div id="home-content" className="space-y-7 lg:space-y-10 pb-24">
@@ -249,6 +251,13 @@ function Index() {
         </header>
 
         <BannerCarousel />
+        <TryOnBanner />
+
+        <section className="px-4">
+          <div className="rounded-[2.25rem] border border-white/70 bg-[linear-gradient(140deg,_rgba(255,255,255,0.95),_rgba(247,244,255,0.92))] p-2 shadow-[0_20px_65px_-28px_rgba(91,33,182,0.28)]">
+            <LumiMirrorCard />
+          </div>
+        </section>
 
         <section className="px-4">
           <Link

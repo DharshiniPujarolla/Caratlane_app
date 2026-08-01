@@ -182,6 +182,7 @@ function Checkout() {
         <button
           onClick={() => {
             if (t.items.length === 0) return toast.error("Your bag is empty");
+            actions.purchaseJewellery();
             actions.clearCart();
             setPlaced(true);
           }}

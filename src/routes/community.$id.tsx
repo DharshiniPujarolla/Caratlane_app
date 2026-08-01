@@ -76,7 +76,7 @@ function CommunityProfile() {
             <div className="mt-3 text-sm text-foreground">
               <p className="font-medium">Notable looks</p>
               <ul className="mt-2 list-disc pl-5">
-                {userInspirations.map((i) => (
+                {userInspirations.map((i: (typeof inspirations)[number]) => (
                   <li key={i.id} className="mt-1 text-sm text-muted-foreground">
                     {i.title} · {i.jewellery}
                   </li>
@@ -89,7 +89,7 @@ function CommunityProfile() {
         <div>
           <h3 className="mb-3 text-lg font-semibold">Featured Jewellery</h3>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {collection.map((p) => (
+            {collection.map((p: (typeof products)[number]) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>

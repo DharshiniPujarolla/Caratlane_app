@@ -12,6 +12,8 @@ import { DailySparkModal } from "@/components/DailySparkModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
+import { StyleMissionCard } from "@/components/StyleMissionCard";
+
 
 import {
   categories,
@@ -290,6 +292,11 @@ function Index() {
             </div>
           </Link>
         </section>
+
+        <section className="px-4">
+          <StyleMissionCard />
+        </section>
+
 
         <section>
           <SectionHeader title="Shop by Category" to="/categories" />

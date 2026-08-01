@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";
@@ -125,6 +125,7 @@ function Index() {
   const wish = useStore((s) => s.wishlist.length);
 
   const [showBottomNav, setShowBottomNav] = useState(false);
+  const [isHomeContentVisible, setIsHomeContentVisible] = useState(false);
   const [showLumiAIPopup, setShowLumiAIPopup] = useState(false);
   const lumiAIPopupTimeout = useRef<number | null>(null);
   const lumiAIPopupReshowTimeout = useRef<number | null>(null);
@@ -148,6 +149,24 @@ function Index() {
       window.removeEventListener("scroll", handleScroll);
       if (lumiAIPopupTimeout.current) window.clearTimeout(lumiAIPopupTimeout.current);
       if (lumiAIPopupReshowTimeout.current) window.clearTimeout(lumiAIPopupReshowTimeout.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const target = document.getElementById("home-content");
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHomeContentVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
     };
   }, []);
 
@@ -471,7 +490,7 @@ function Index() {
       {/* Navigation tab reveals when scrolling down */}
       {showBottomNav && <BottomNav />}
 
-      {showLumiAIPopup && (
+      {showLumiAIPopup && isHomeContentVisible && (
         <Link
           to="/lumiai"
           className="fixed left-4 bottom-24 z-50 flex h-[220px] w-[220px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-purple-700 via-fuchsia-600 to-pink-400 p-5 shadow-[0_28px_90px_rgba(120,72,200,0.18)] transition-transform duration-300 hover:scale-[1.02] backdrop-blur-sm animate-fade-up sm:left-6 cursor-pointer"

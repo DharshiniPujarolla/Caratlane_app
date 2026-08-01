@@ -1,5 +1,5 @@
-import { ArrowRight, Sparkles } from "lucide-react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, ChevronLeft, Sparkles } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import necklaceImg from "@/assets/p-necklace.jpg";
 import ringImg from "@/assets/p-ring2.jpg";
 import earringsImg from "@/assets/p.earrings3.jpg";
@@ -19,8 +19,18 @@ export const Route = createFileRoute("/lumiai")({
 });
 
 function LumiAI() {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 px-4 py-12 text-slate-900">
+    <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 px-4 py-12 text-slate-900">
+      <button
+        type="button"
+        onClick={() => router.history.back()}
+        aria-label="Go back"
+        className="absolute left-4 top-4 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/70 text-slate-950 shadow-[0_18px_48px_rgba(15,23,42,0.1)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/80"
+      >
+        <ChevronLeft size={20} />
+      </button>
       <div className="relative mx-auto max-w-6xl space-y-10">
         <div className="pointer-events-none absolute left-10 top-10 h-72 w-72 rounded-full bg-lavender-200/50 blur-3xl" />
         <div className="pointer-events-none absolute right-10 top-40 h-56 w-56 rounded-full bg-pink-200/50 blur-3xl" />

@@ -29,6 +29,7 @@ import { Route as StyleMissionRouteImport } from './routes/style-mission'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ApiLumimirrorGenerateRouteImport } from './routes/api/lumimirror-generate'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as CommunityIdRouteImport } from './routes/community.$id'
 import { Route as LumisignatureQuizRouteImport } from './routes/lumisignature/quiz'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -132,6 +133,11 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunityIdRoute = CommunityIdRouteImport.update({
+  id: '/community/$id',
+  path: '/community/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LumisignatureQuizRoute = LumisignatureQuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   id:
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesById: FileRoutesById
@@ -312,6 +324,7 @@ export interface RootRouteChildren {
   WishlistRoute: typeof WishlistRoute
   ApiLumimirrorGenerateRoute: typeof ApiLumimirrorGenerateRoute
   CategorySlugRoute: typeof CategorySlugRoute
+  CommunityIdRoute: typeof CommunityIdRoute
   ProductIdRoute: typeof ProductIdRoute
 }
 
@@ -457,6 +470,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/community/$id': {
+      id: '/community/$id'
+      path: '/community/$id'
+      fullPath: '/community/$id'
+      preLoaderRoute: typeof CommunityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lumisignature/quiz': {
       id: '/lumisignature/quiz'
       path: '/quiz'
@@ -507,6 +527,7 @@ const rootRouteChildren: RootRouteChildren = {
   WishlistRoute: WishlistRoute,
   ApiLumimirrorGenerateRoute: ApiLumimirrorGenerateRoute,
   CategorySlugRoute: CategorySlugRoute,
+  CommunityIdRoute: CommunityIdRoute,
   ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport

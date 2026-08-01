@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { JourneyProvider } from "../Journey/JourneyContext";
 import {
   Outlet,
   Link,
@@ -123,6 +124,19 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+HEAD
+  const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
+  const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
+return (
+  <QueryClientProvider client={queryClient}>
+    <JourneyProvider>
+      <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
+        <div key={pathname} className="animate-soft-in pb-24">
+          <Outlet />
+        </div>
+
+        {!bare && <BottomNav />}
+        {!splashLike && <ConciergeFab />}
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -130,8 +144,17 @@ function RootComponent() {
         <div key={pathname} className="animate-soft-in">
           <Outlet />
         </div>
+ f438e484e446079e9603fe8d33e48d873428fdbd
       </div>
+
       <Toaster position="top-center" />
+<<<<<<< HEAD
+    </JourneyProvider>
+  </QueryClientProvider>
+);
+}
+=======
     </QueryClientProvider>
   );
 }
+>>>>>>> f438e484e446079e9603fe8d33e48d873428fdbd

@@ -12,6 +12,8 @@ import { DailySparkModal } from "@/components/DailySparkModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
+import { StyleMissionCard } from "@/components/StyleMissionCard";
+
 
 import {
   categories,

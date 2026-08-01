@@ -23,6 +23,10 @@ import necklaceTryon3 from "@/assets/necklace-tryon-3.png";
 import necklaceTryon4 from "@/assets/necklace-tryon-4.png";
 import necklaceTryon5 from "@/assets/necklace-tryon-5.png";
 import necklaceTryon6 from "@/assets/necklace-tryon-6.png";
+import silverRing from "@/assets/silver-ring.jpg";
+import silverEarring from "@/assets/silver-earring.jpg";
+import silverNecklace from "@/assets/silver-necklace.jpg";
+import silverBracelet from "@/assets/silver-bracelet.jpg";
 
 import yami from "@/assets/yami.jpg";
 
@@ -39,6 +43,10 @@ export const images = {
   bracelet,
   bracelet2,
   necklace,
+  silverRing,
+  silverEarring,
+  silverNecklace,
+  silverBracelet,
   hero1,
   hero2,
   hero3,
@@ -61,7 +69,7 @@ export type Product = {
   gallery: string[];
   metal: "Yellow Gold" | "Rose Gold" | "White Gold" | "Platinum";
   purity: "14 KT" | "18 KT" | "22 KT";
-  material: "Gold" | "Diamond" | "Gemstone" | "Platinum";
+  material: "Gold" | "Silver" | "Diamond" | "Gemstone" | "Platinum";
   diamondType: "Natural" | "Lab Grown" | "None";
   gender: "Women" | "Men" | "Unisex";
   occasion: string[];
@@ -79,6 +87,7 @@ export const categories = [
   { slug: "bangles", name: "Bangles", image: hero2 },
   { slug: "chains", name: "Chains", image: necklace },
   { slug: "gold", name: "Gold Jewellery", image: hero2 },
+  { slug: "silver", name: "Silver Jewellery", image: silverRing },
   { slug: "diamond", name: "Diamond Jewellery", image: hero1 },
 ];
 
@@ -90,6 +99,7 @@ const catImage: Record<string, string[]> = {
   Bracelets: [bracelet, bracelet2],
   Bangles: [bracelet2],
   Chains: [necklace],
+  Silver: [silverRing, silverEarring, silverNecklace, silverBracelet],
 };
 
 const names: Record<string, string[]> = {
@@ -123,6 +133,12 @@ const names: Record<string, string[]> = {
   Bracelets: ["Nyla Tennis Bracelet", "Sana Charm Bracelet", "Ophelia Chain Bracelet"],
   Bangles: ["Rani Diamond Bangle", "Kanika Gold Bangle", "Tara Pave Bangle"],
   Chains: ["Aurum Rope Chain", "Kai Cuban Chain", "Nova Box Chain"],
+  Silver: [
+    "Silver Ring",
+    "Silver Earrings",
+    "Silver Necklace",
+    "Silver Bracelet",
+  ],
 };
 
 const metals: Product["metal"][] = ["Yellow Gold", "Rose Gold", "White Gold", "Platinum"];
@@ -330,6 +346,7 @@ export const trendingSearches = [
 
 export const byCategory = (slug: string) => {
   if (slug === "gold") return products.filter((p) => p.material === "Gold");
+  if (slug === "silver") return products.filter((p) => p.category === "Silver");
   if (slug === "diamond") return products.filter((p) => p.material === "Diamond");
   const name = categories.find((c) => c.slug === slug)?.name ?? "";
   return products.filter((p) => p.category === name);

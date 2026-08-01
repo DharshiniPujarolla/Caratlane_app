@@ -24,6 +24,7 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
     let faceLandmarker: FaceLandmarker;
     let animationId = 0;
     let stream: MediaStream | undefined;
+    let isActive = true;
 
     const jewelryImg = new Image();
     jewelryImg.src = imageSrc;
@@ -53,6 +54,7 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
         await videoRef.current.play();
       }
 
+      if (!isActive) return;
       setLoading(false);
       renderLoop();
     }
@@ -60,21 +62,24 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
     function renderLoop() {
       const video = videoRef.current;
       const canvas = canvasRef.current;
-      if (!video || !canvas || !faceLandmarker) {
+      if (!isActive || !video || !canvas || !faceLandmarker) {
         animationId = window.requestAnimationFrame(renderLoop);
         return;
       }
 
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      const dpr = window.devicePixelRatio || 1;
+      const cssWidth = video.videoWidth;
+      const cssHeight = video.videoHeight;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
       const ctx = canvas.getContext("2d");
       if (!ctx) {
         animationId = window.requestAnimationFrame(renderLoop);
         return;
       }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
+      ctx.drawImage(video, 0, 0, cssWidth, cssHeight);
 
       const results = faceLandmarker.detectForVideo(video, performance.now());
       if (results.faceLandmarks.length > 0) {
@@ -87,35 +92,62 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
         const jewelryImg = jewelryImageRef.current;
 
         if (jewelryImg?.complete) {
-          switch (jewelryType) {
-            case "earring": {
-              const size = canvas.width * EARRING_SIZE_MULT;
-              const leftX = leftEar.x * canvas.width - size / 2;
-              const leftY = leftEar.y * canvas.height + canvas.height * EARRING_VERTICAL_OFFSET;
-              const rightX = rightEar.x * canvas.width - size / 2;
-              const rightY = rightEar.y * canvas.height + canvas.height * EARRING_VERTICAL_OFFSET;
-              ctx.drawImage(jewelryImg, leftX, leftY, size, size * 1.4);
-              ctx.drawImage(jewelryImg, rightX, rightY, size, size * 1.4);
-              break;
-            }
-            case "necklace": {
-              const jawWidth = Math.abs(rightJaw.x - leftJaw.x) * canvas.width;
-              const width = jawWidth * NECKLACE_WIDTH_MULT;
-              const height = width * NECKLACE_HEIGHT_RATIO;
-              const topY = chin.y * canvas.height + NECKLACE_VERTICAL_GAP * canvas.height;
-              ctx.drawImage(jewelryImg, chin.x * canvas.width - width / 2, topY, width, height);
-              break;
-            }
+          if (jewelryType === "earring") {
+            const size = cssWidth * EARRING_SIZE_MULT;
+            const tilt = Math.atan2(rightEar.y - leftEar.y, rightEar.x - leftEar.x);
+            const renderEarring = (x: number, y: number) => {
+              ctx.save();
+              ctx.translate(x, y);
+              ctx.rotate(tilt * 0.2);
+              ctx.shadowColor = "rgba(15, 23, 42, 0.3)";
+              ctx.shadowBlur = 14;
+              ctx.shadowOffsetY = 8;
+              ctx.globalAlpha = 0.96;
+              ctx.drawImage(jewelryImg, -size / 2, -size * 0.1, size, size * 1.4);
+              ctx.restore();
+            };
+            renderEarring(
+              leftEar.x * cssWidth,
+              leftEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
+            );
+            renderEarring(
+              rightEar.x * cssWidth,
+              rightEar.y * cssHeight + cssHeight * EARRING_VERTICAL_OFFSET
+            );
+          }
+
+          if (jewelryType === "necklace") {
+            const jawWidth = Math.abs(rightJaw.x - leftJaw.x) * cssWidth;
+            const width = Math.max(120, Math.min(cssWidth * 0.9, jawWidth * NECKLACE_WIDTH_MULT));
+            const height = Math.max(80, Math.min(cssHeight * 0.36, width * NECKLACE_HEIGHT_RATIO));
+            const topY = chin.y * cssHeight + NECKLACE_VERTICAL_GAP * cssHeight;
+            const centerX = chin.x * cssWidth;
+            const centerY = topY + height * 0.55;
+            const tilt = Math.atan2(rightJaw.y - leftJaw.y, rightJaw.x - leftJaw.x);
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(tilt * 0.2);
+            ctx.transform(1, 0.04, 0.02, 1, 0, 0);
+            ctx.shadowColor = "rgba(15, 23, 42, 0.34)";
+            ctx.shadowBlur = 16;
+            ctx.shadowOffsetY = 10;
+            ctx.globalAlpha = 0.96;
+            ctx.drawImage(jewelryImg, -width / 2, -height / 2, width, height);
+            ctx.restore();
           }
         }
       }
 
-      animationId = window.requestAnimationFrame(renderLoop);
+      if (isActive) {
+        animationId = window.requestAnimationFrame(renderLoop);
+      }
     }
 
     setup();
 
     return () => {
+      isActive = false;
       cancelAnimationFrame(animationId);
       stream?.getTracks().forEach((track) => track.stop());
     };

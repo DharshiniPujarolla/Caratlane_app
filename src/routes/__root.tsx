@@ -13,8 +13,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { BottomNav } from "@/components/BottomNav";
-import { ConciergeFab } from "@/components/ConciergeFab";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -123,11 +121,10 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/auth", "/product", "/checkout", "/brands", "/shaya"];
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+HEAD
   const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
   const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
 return (
@@ -140,10 +137,24 @@ return (
 
         {!bare && <BottomNav />}
         {!splashLike && <ConciergeFab />}
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
+        <div key={pathname} className="animate-soft-in">
+          <Outlet />
+        </div>
+ f438e484e446079e9603fe8d33e48d873428fdbd
       </div>
 
       <Toaster position="top-center" />
+<<<<<<< HEAD
     </JourneyProvider>
   </QueryClientProvider>
 );
 }
+=======
+    </QueryClientProvider>
+  );
+}
+>>>>>>> f438e484e446079e9603fe8d33e48d873428fdbd

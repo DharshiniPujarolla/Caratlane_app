@@ -6,8 +6,52 @@ import necklace from "@/assets/p-necklace.jpg";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
+import hero4 from "@/assets/hero-4.jpg";
+import hero5 from "@/assets/hero-5.jpg";
+import hero6 from "@/assets/hero-6.jpg";
+import ring2 from "@/assets/p-ring2.jpg";
+import bracelet2 from "@/assets/p.bracelet2.jpg";
+import earrings2 from "@/assets/p.earrings2.jpg";
+import earrings3 from "@/assets/p.earrings3.jpg";
+import earrings4 from "@/assets/p.earrings4.jpg";
+import pendant2 from "@/assets/p.pendant2.jpg";
+import pendant3 from "@/assets/p.pendant3.jpg";
+import necklaceTryon3 from "@/assets/necklace-tryon-3.png";
+import necklaceTryon4 from "@/assets/necklace-tryon-4.png";
+import necklaceTryon5 from "@/assets/necklace-tryon-5.png";
+import necklaceTryon6 from "@/assets/necklace-tryon-6.png";
+import silverRing from "@/assets/silver-ring.jpg";
+import silverEarring from "@/assets/silver-earring.jpg";
+import silverNecklace from "@/assets/silver-necklace.jpg";
+import silverBracelet from "@/assets/silver-bracelet.jpg";
 
-export const images = { ring, earrings, pendant, bracelet, necklace, hero1, hero2, hero3 };
+import yami from "@/assets/yami.jpg";
+
+export const images = {
+  ring,
+  ring2,
+  earrings,
+  earrings2,
+  earrings3,
+  earrings4,
+  pendant,
+  pendant2,
+  pendant3,
+  bracelet,
+  bracelet2,
+  necklace,
+  silverRing,
+  silverEarring,
+  silverNecklace,
+  silverBracelet,
+  hero1,
+  hero2,
+  hero3,
+  hero4,
+  hero5,
+  hero6,
+  yami,
+};
 
 export type Product = {
   id: string;
@@ -21,7 +65,7 @@ export type Product = {
   gallery: string[];
   metal: "Yellow Gold" | "Rose Gold" | "White Gold" | "Platinum";
   purity: "14 KT" | "18 KT" | "22 KT";
-  material: "Gold" | "Diamond" | "Gemstone" | "Platinum";
+  material: "Gold" | "Silver" | "Diamond" | "Gemstone" | "Platinum";
   diamondType: "Natural" | "Lab Grown" | "None";
   gender: "Women" | "Men" | "Unisex";
   occasion: string[];
@@ -39,17 +83,19 @@ export const categories = [
   { slug: "bangles", name: "Bangles", image: hero2 },
   { slug: "chains", name: "Chains", image: necklace },
   { slug: "gold", name: "Gold Jewellery", image: hero2 },
+  { slug: "silver", name: "Silver Jewellery", image: silverRing },
   { slug: "diamond", name: "Diamond Jewellery", image: hero1 },
 ];
 
-const catImage: Record<string, string> = {
-  Rings: ring,
-  Earrings: earrings,
-  Pendants: pendant,
-  Necklaces: necklace,
-  Bracelets: bracelet,
-  Bangles: hero2,
-  Chains: necklace,
+const catImage: Record<string, string[]> = {
+  Rings: [ring, ring2],
+  Earrings: [earrings, earrings2, earrings3, earrings4],
+  Pendants: [pendant, pendant2, pendant3],
+  Necklaces: [necklace, necklaceTryon3, necklaceTryon4, necklaceTryon5, necklaceTryon6],
+  Bracelets: [bracelet, bracelet2],
+  Bangles: [bracelet2],
+  Chains: [necklace],
+  Silver: [silverRing, silverEarring, silverNecklace, silverBracelet],
 };
 
 const names: Record<string, string[]> = {
@@ -83,6 +129,12 @@ const names: Record<string, string[]> = {
   Bracelets: ["Nyla Tennis Bracelet", "Sana Charm Bracelet", "Ophelia Chain Bracelet"],
   Bangles: ["Rani Diamond Bangle", "Kanika Gold Bangle", "Tara Pave Bangle"],
   Chains: ["Aurum Rope Chain", "Kai Cuban Chain", "Nova Box Chain"],
+  Silver: [
+    "Silver Ring",
+    "Silver Earrings",
+    "Silver Necklace",
+    "Silver Bracelet",
+  ],
 };
 
 const metals: Product["metal"][] = ["Yellow Gold", "Rose Gold", "White Gold", "Platinum"];
@@ -100,7 +152,8 @@ export const products: Product[] = Object.entries(names).flatMap(([category, lis
     const price = Math.round((12000 + r * 180000) / 100) * 100;
     const mrp = Math.round((price * (1.1 + seeded(seed + 1) * 0.35)) / 100) * 100;
     const isDiamond = seeded(seed + 2) > 0.35;
-    const img = catImage[category];
+    const imgs = catImage[category];
+    const img = imgs[i % imgs.length];
     return {
       id: `${category.toLowerCase()}-${i + 1}`,
       name,
@@ -110,7 +163,7 @@ export const products: Product[] = Object.entries(names).flatMap(([category, lis
       rating: Math.round((4 + seeded(seed + 3)) * 10) / 10,
       reviews: 20 + Math.floor(seeded(seed + 4) * 480),
       image: img,
-      gallery: [img, hero1, hero3, hero2],
+      gallery: [img],
       metal: metals[Math.floor(seeded(seed + 5) * metals.length)],
       purity: (["14 KT", "18 KT", "22 KT"] as const)[Math.floor(seeded(seed + 6) * 3)],
       material: isDiamond ? "Diamond" : "Gold",
@@ -139,25 +192,25 @@ export const inr = (n: number) =>
 export const banners = [
   {
     id: "b1",
-    image: hero1,
-    title: "The Everyday Diamond Edit",
-    subtitle: "Flat 25% off on making charges",
+    image: hero4,
+    title: "Diamond Dreams",
+    subtitle: "Luxury crafted for every occasion",
     cta: "Explore Now",
     to: "/category/diamond",
   },
   {
     id: "b2",
-    image: hero2,
-    title: "Golden Hour Bangles",
+    image: hero5,
+    title: "Golden Elegance",
     subtitle: "Zero making charges this week",
     cta: "Shop Gold",
     to: "/category/gold",
   },
   {
     id: "b3",
-    image: hero3,
-    title: "The Wedding Vault",
-    subtitle: "Bridal sets crafted to be inherited",
+    image: hero6,
+    title: "Bridal Collection",
+    subtitle: "Timeless jewellery for your big day",
     cta: "View Collection",
     to: "/category/rings",
   },
@@ -221,7 +274,7 @@ export const reviewsData = [
 export const stores = [
   {
     id: "s1",
-    name: "Luméa — Indiranagar",
+    name: "LumiAura — Indiranagar",
     address: "100 Ft Road, Indiranagar, Bengaluru 560038",
     distance: "1.4 km",
     timing: "11:00 AM – 9:00 PM",
@@ -229,7 +282,7 @@ export const stores = [
   },
   {
     id: "s2",
-    name: "Luméa — Koramangala",
+    name: "LumiAura — Koramangala",
     address: "80 Ft Road, 4th Block, Koramangala, Bengaluru 560034",
     distance: "4.8 km",
     timing: "11:00 AM – 9:30 PM",
@@ -237,7 +290,7 @@ export const stores = [
   },
   {
     id: "s3",
-    name: "Luméa — Phoenix Mall",
+    name: "LumiAura — Phoenix Mall",
     address: "Whitefield Road, Mahadevapura, Bengaluru 560048",
     distance: "9.2 km",
     timing: "10:30 AM – 10:00 PM",
@@ -283,6 +336,7 @@ export const trendingSearches = [
 
 export const byCategory = (slug: string) => {
   if (slug === "gold") return products.filter((p) => p.material === "Gold");
+  if (slug === "silver") return products.filter((p) => p.category === "Silver");
   if (slug === "diamond") return products.filter((p) => p.material === "Diamond");
   const name = categories.find((c) => c.slug === slug)?.name ?? "";
   return products.filter((p) => p.category === name);

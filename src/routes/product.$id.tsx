@@ -56,7 +56,13 @@ function ProductPage() {
   const [zoom, setZoom] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const [showTryOn, setShowTryOn] = useState(false);
-const tryOnEligible = product.category === "Necklaces" || product.category === "Earrings";
+  const tryOnJewelryType =
+    product.category === "Earrings"
+      ? "earring"
+      : product.category === "Necklaces"
+        ? "necklace"
+        : undefined;
+  const tryOnEligible = Boolean(product.tryOnImage && tryOnJewelryType);
   const [tab, setTab] = useState<"details" | "reviews">("details");
 
   useEffect(() => {
@@ -319,12 +325,9 @@ const tryOnEligible = product.category === "Necklaces" || product.category === "
           </div>
         </section>
       )}
-      {showTryOn && (
+      {showTryOn && product.tryOnImage && tryOnJewelryType && (
         <div className="fixed inset-0 z-50 mx-auto flex max-w-[480px] flex-col items-center justify-center bg-black/90 px-4">
-          <VirtualTryOn
-            showNecklace={product.category === "Necklaces"}
-            showEarring={product.category === "Earrings"}
-          />
+          <VirtualTryOn jewelryType={tryOnJewelryType} imageSrc={product.tryOnImage} />
           <button
             onClick={() => setShowTryOn(false)}
             className="press mt-5 rounded-xl bg-card px-6 py-2.5 text-sm font-semibold"

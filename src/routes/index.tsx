@@ -146,6 +146,9 @@ function Index() {
   const bestSellers = products.filter((p) => p.tags.includes("Best Seller")).slice(0, 6);
   const recentProducts = recent.map(findProduct).filter(Boolean);
   const continueItem = cart[0] ? findProduct(cart[0].id) : undefined;
+  const signatureProducts = products
+    .filter((product) => ["Necklaces", "Earrings", "Pendants", "Rings"].includes(product.category))
+    .slice(0, 3);
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -205,43 +208,78 @@ function Index() {
         </header>
 
         <BannerCarousel />
-        <TryOnBanner />
-
-        <section className="px-4">
-          <LumiMirrorCard />
-        </section>
 
         <section className="px-4">
           <Link
             to="/lumisignature"
-            className="press block overflow-hidden rounded-3xl bg-gradient-to-r from-violet-700 via-fuchsia-600 to-pink-500 p-6 text-white shadow-float"
+            className="press group block overflow-hidden rounded-[40px] bg-gradient-to-br from-purple-950 via-fuchsia-700 to-pink-500 p-6 shadow-[0_40px_120px_rgba(131,58,180,0.25)] transition duration-300 hover:-translate-y-1"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.25em] opacity-80">
-                  ✨ LUMISIGNATURE™
-                </p>
+            <div className="relative grid h-[240px] gap-4 overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_top_left,_rgba(255,214,165,0.15),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(255,237,192,0.12),_transparent_35%),linear-gradient(135deg,#3f1456,#8b5cf6_45%,#ec4899)] p-6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:grid-cols-[1.1fr_0.9fr] lg:p-8">
+              <div className="flex flex-col justify-between">
+                <div className="space-y-4">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-amber-100 backdrop-blur">
+                    ✨ LumiSignature
+                  </span>
+                  <h2 className="text-3xl font-black leading-tight tracking-[-0.04em] text-white sm:text-4xl">
+                    Discover Your Jewellery DNA
+                  </h2>
+                  <p className="max-w-lg text-sm leading-6 text-white/85 sm:text-base">
+                    Unlock a premium jewellery collection curated for your signature style through a luxurious AI styling experience.
+                  </p>
+                </div>
 
-                <h2 className="mt-2 text-2xl font-bold">
-                  Discover Your Jewellery DNA
-                </h2>
-
-                <p className="mt-2 max-w-md text-sm text-white/90">
-                  Answer 5 quick questions and uncover the jewellery style that
-                  matches your personality.
-                </p>
-
-                <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-violet-700">
+                <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-300 via-amber-200 to-white/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_14px_45px_rgba(249,207,37,0.28)] transition duration-300 group-hover:brightness-110">
                   Discover My DNA
-                <ArrowRight size={16} />
+                  <ArrowRight size={16} className="text-slate-950" />
                 </div>
               </div>
 
-              <div className="hidden md:flex items-center justify-center text-7xl opacity-30">
-              🧬
+              <div className="relative flex items-center justify-center">
+                <div className="absolute inset-x-4 top-4 h-36 rounded-full bg-amber-300/20 blur-3xl" />
+                <div className="relative h-full w-full max-w-[300px]">
+                  {signatureProducts.map((product, index) => {
+                    const positions = [
+                      'absolute left-0 top-6 h-36 w-36',
+                      'absolute right-0 top-0 h-44 w-44',
+                      'absolute left-14 bottom-4 h-28 w-28',
+                    ];
+
+                    const sizes = [
+                      'translate-z-0',
+                      'translate-z-10',
+                      'translate-z-0',
+                    ];
+
+                    return (
+                      <div
+                        key={product.id}
+                        className={`${positions[index]} overflow-hidden rounded-[30px] border border-white/15 bg-white/10 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-xl`}                        
+                        style={{ animation: `floatY 8s ease-in-out ${index * 0.12}s infinite` }}
+                      >
+                        <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="relative h-full w-full object-cover"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </Link>
+        </section>
+
+        <section className="px-4">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
+            <div className="h-full min-h-[220px]">
+              <TryOnBanner />
+            </div>
+            <div className="h-full min-h-[220px]">
+              <LumiMirrorCard />
+            </div>
+          </div>
         </section>
 
         <section>

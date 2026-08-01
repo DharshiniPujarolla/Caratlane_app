@@ -14,6 +14,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
+import { BottomNav } from "@/components/BottomNav";
+import { ConciergeFab } from "@/components/ConciergeFab";
 
 function NotFoundComponent() {
   return (
@@ -121,9 +123,13 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const FULL_BLEED = ["/splash", "/brands", "/auth", "/product/", "/checkout"];
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
+  const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -132,6 +138,9 @@ function RootComponent() {
           <div key={pathname} className="animate-soft-in pb-24">
             <Outlet />
           </div>
+
+          {!bare && <BottomNav />}
+          {!splashLike && <ConciergeFab />}
         </div>
 
         <Toaster position="top-center" />

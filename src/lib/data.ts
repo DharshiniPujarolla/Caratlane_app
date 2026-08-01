@@ -1,3 +1,6 @@
+import earring1Tryon from "@/assets/tryon/earring-1.png";
+import necklace1Tryon from "@/assets/tryon/necklace-1.png";
+import pendant1Tryon from "@/assets/tryon/pendant-1.png";
 import ring from "@/assets/p-ring.jpg";
 import earrings from "@/assets/p-earrings.jpg";
 import pendant from "@/assets/p-pendant.jpg";
@@ -54,6 +57,7 @@ export const images = {
 };
 
 export type Product = {
+  tryOnImage?: string;
   id: string;
   name: string;
   category: string;
@@ -139,6 +143,11 @@ const names: Record<string, string[]> = {
 
 const metals: Product["metal"][] = ["Yellow Gold", "Rose Gold", "White Gold", "Platinum"];
 const occasions = ["Daily Wear", "Wedding", "Gifting", "Office Wear", "Festive"];
+const tryOnImageByName: Record<string, string> = {
+  "Luna Stud Earrings": earring1Tryon,
+  "Devi Temple Necklace": necklace1Tryon,
+  "Zoya Initial Pendant": pendant1Tryon,
+};
 
 function seeded(n: number) {
   const x = Math.sin(n * 9973) * 10000;
@@ -160,6 +169,7 @@ export const products: Product[] = Object.entries(names).flatMap(([category, lis
       category,
       price,
       mrp,
+      tryOnImage: tryOnImageByName[name],
       rating: Math.round((4 + seeded(seed + 3)) * 10) / 10,
       reviews: 20 + Math.floor(seeded(seed + 4) * 480),
       image: img,

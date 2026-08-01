@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { processOverlayImageToTransparentDataUrl } from "@/lib/lumimirror-overlay";
+import { FilesetResolver, FaceLandmarker } from "@mediapipe/tasks-vision";
+import { processOverlayImageToTransparentDataUrl, type FacePlacement } from "@/lib/lumimirror-overlay";
 
 type JewelleryOverlayProps = {
   src: string;
@@ -10,16 +11,7 @@ type JewelleryOverlayProps = {
   className?: string;
   overlayClassName?: string;
   overlayStyle?: CSSProperties;
-  placement?: {
-    neckWidth: number;
-    anchorX: number;
-    anchorY: number;
-    faceHeight: number;
-    chinY: number;
-    neckLength: number;
-    visibleNeck: boolean;
-    message?: string;
-  } | null;
+  placement?: FacePlacement | null;
 };
 
 export function JewelleryOverlay({
@@ -34,13 +26,14 @@ export function JewelleryOverlay({
   const [processedOverlaySrc, setProcessedOverlaySrc] = useState<string | undefined>(overlaySrc);
   const previewRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const faceLandmarkerRef = useRef<FaceLandmarker | null>(null);
 
   const drawOverlay = useMemo(() => {
-    return (reason: "initial" | "resize") => {
+    return async (reason: "initial" | "resize") => {
       const canvas = canvasRef.current;
       const previewElement = previewRef.current;
 
-      if (!canvas || !previewElement || !placement || !processedOverlaySrc) {
+      if (!canvas || !previewElement || !processedOverlaySrc) {
         if (canvas) {
           const ctx = canvas.getContext("2d");
           ctx?.clearRect(0, 0, canvas.width, canvas.height);
@@ -48,79 +41,115 @@ export function JewelleryOverlay({
         return;
       }
 
-      const rect = canvas.getBoundingClientRect();
+      const rect = previewElement.getBoundingClientRect();
       if (rect.width <= 0 || rect.height <= 0) {
         return;
       }
 
-      const canvasWidth = Math.max(1, Math.round(rect.width));
-      const canvasHeight = Math.max(1, Math.round(rect.height));
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
+      const dpr = window.devicePixelRatio || 1;
+      const cssWidth = Math.max(1, Math.round(rect.width));
+      const cssHeight = Math.max(1, Math.round(rect.height));
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) {
         return;
       }
 
-      const widthPx = Math.max(80, placement.neckWidth * canvas.width);
-      const leftPx = Math.max(0, Math.min(canvas.width - widthPx, (placement.anchorX - placement.neckWidth / 2) * canvas.width));
-      const chinPixelY = placement.chinY * canvas.height;
-      const neckLengthPixels = placement.neckLength * canvas.height;
-      const finalY = chinPixelY + neckLengthPixels;
-      const heightPx = Math.max(80, Math.min(canvas.height * 0.55, placement.neckLength * canvas.height * 1.4));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+      const sourceImage = previewElement.querySelector("img") as HTMLImageElement | null;
       const overlayImage = new Image();
-      overlayImage.onload = () => {
-        console.info("[LumiMirror] overlay canvas draw", {
-          redrawReason: reason,
-          canvasElement: canvas.tagName,
-          canvasId: canvas.id || "(none)",
-          canvasPropertyUsed: "canvas.width / canvas.height",
-          canvasWidth: Number(canvas.width.toFixed(2)),
-          canvasHeight: Number(canvas.height.toFixed(2)),
-          clientWidth: Number(canvas.clientWidth.toFixed(2)),
-          clientHeight: Number(canvas.clientHeight.toFixed(2)),
-          renderedWidth: Number(rect.width.toFixed(2)),
-          renderedHeight: Number(rect.height.toFixed(2)),
-          drawImageArgs: {
-            sx: 0,
-            sy: 0,
-            sw: overlayImage.width,
-            sh: overlayImage.height,
-            dx: Number(leftPx.toFixed(2)),
-            dy: Number(finalY.toFixed(2)),
-            dw: Number(widthPx.toFixed(2)),
-            dh: Number(heightPx.toFixed(2)),
-          },
-          normalized: {
-            anchorX: Number(placement.anchorX.toFixed(4)),
-            anchorY: Number(placement.anchorY.toFixed(4)),
-            neckLength: Number(placement.neckLength.toFixed(4)),
-            faceHeight: Number(placement.faceHeight.toFixed(4)),
-            neckWidth: Number(placement.neckWidth.toFixed(4)),
-            chinY: Number(placement.chinY.toFixed(4)),
-          },
-          pixel: {
-            chinPixelY: Number(chinPixelY.toFixed(2)),
-            neckLengthPixels: Number(neckLengthPixels.toFixed(2)),
-            finalY: Number(finalY.toFixed(2)),
-            x: Number(leftPx.toFixed(2)),
-            width: Number(widthPx.toFixed(2)),
-            height: Number(heightPx.toFixed(2)),
-          },
-        });
-
-        ctx.drawImage(overlayImage, leftPx, finalY, widthPx, heightPx);
-      };
-
       overlayImage.src = processedOverlaySrc;
+      await overlayImage.decode().catch(() => undefined);
+
+      let landmarks: Array<{ x: number; y: number }> | null = null;
+      const faceLandmarker = faceLandmarkerRef.current;
+
+      if (faceLandmarker && sourceImage) {
+        const imageElement = new Image();
+        imageElement.src = src;
+        await imageElement.decode().catch(() => undefined);
+
+        try {
+          const result = await faceLandmarker.detect(imageElement);
+          landmarks = result.faceLandmarks?.[0] ?? null;
+        } catch {
+          landmarks = null;
+        }
+      }
+
+      const leftJaw = landmarks?.[172] ?? { x: 0.46, y: 0.66 };
+      const rightJaw = landmarks?.[397] ?? { x: 0.54, y: 0.66 };
+      const chin = landmarks?.[152] ?? { x: 0.5, y: 0.66 };
+      const leftEar = landmarks?.[454] ?? { x: 0.42, y: 0.56 };
+      const rightEar = landmarks?.[234] ?? { x: 0.58, y: 0.56 };
+      const nose = landmarks?.[1] ?? { x: 0.5, y: 0.52 };
+
+      const jawDistance = Math.abs(rightJaw.x - leftJaw.x) * cssWidth;
+      const neckWidthPx = Math.max(110, Math.min(cssWidth * 0.72, jawDistance * 0.98 + (placement?.neckWidth ?? 0.18) * cssWidth * 0.5));
+      const neckHeightPx = Math.max(70, Math.min(cssHeight * 0.42, neckWidthPx * 0.7));
+      const anchorX = placement?.anchorX ?? (leftJaw.x + rightJaw.x) / 2;
+      const anchorY = placement?.anchorY ?? chin.y + (placement?.neckLength ?? 0.12) * 0.45 + (nose.y - chin.y) * 0.12;
+      const centerX = anchorX * cssWidth;
+      const centerY = anchorY * cssHeight + (placement?.neckLength ?? 0.12) * cssHeight * 0.35;
+      const headTilt = Math.atan2(rightEar.y - leftEar.y, rightEar.x - leftEar.x);
+      const rotationDegrees = (((placement?.rotationAngle ?? headTilt) * 180) / Math.PI) * 0.35;
+      const perspectiveX = Math.max(-0.2, Math.min(0.2, headTilt * 0.16));
+      const perspectiveY = Math.max(-0.08, Math.min(0.08, (chin.y - nose.y) * 0.25));
+      const scale = Math.max(0.86, Math.min(1.16, 0.92 + (placement?.neckLength ?? 0.12) * 0.85 + (placement?.faceHeight ?? 0.2) * 0.2));
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate((rotationDegrees * Math.PI) / 180);
+      ctx.scale(scale, scale);
+      ctx.transform(1, perspectiveY, perspectiveX, 1, 0, 0);
+      ctx.shadowColor = "rgba(15, 23, 42, 0.34)";
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetY = 10;
+      ctx.globalAlpha = 0.96;
+      ctx.drawImage(overlayImage, -neckWidthPx / 2, -neckHeightPx / 2, neckWidthPx, neckHeightPx);
+      ctx.restore();
+
+      const fadeGradient = ctx.createLinearGradient(0, centerY - neckHeightPx / 2, 0, centerY - neckHeightPx / 2 + Math.min(26, neckHeightPx * 0.22));
+      fadeGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+      fadeGradient.addColorStop(1, "rgba(255, 255, 255, 0.28)");
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate((rotationDegrees * Math.PI) / 180);
+      ctx.scale(scale, scale);
+      ctx.transform(1, perspectiveY, perspectiveX, 1, 0, 0);
+      ctx.globalAlpha = 0.94;
+      ctx.fillStyle = fadeGradient;
+      ctx.fillRect(-neckWidthPx / 2, -neckHeightPx / 2, neckWidthPx, Math.min(26, neckHeightPx * 0.22));
+      ctx.restore();
+
+      console.info("[LumiMirror] overlay draw", {
+        redrawReason: reason,
+        rotationDegrees: Number(rotationDegrees.toFixed(2)),
+        scale: Number(scale.toFixed(3)),
+        position: {
+          x: Number(centerX.toFixed(2)),
+          y: Number(centerY.toFixed(2)),
+        },
+        size: {
+          width: Number(neckWidthPx.toFixed(2)),
+          height: Number(neckHeightPx.toFixed(2)),
+        },
+        canvas: {
+          width: Number(cssWidth.toFixed(2)),
+          height: Number(cssHeight.toFixed(2)),
+          clientWidth: Number(rect.width.toFixed(2)),
+          clientHeight: Number(rect.height.toFixed(2)),
+        },
+      });
     };
-  }, [placement, processedOverlaySrc]);
+  }, [placement, processedOverlaySrc, src]);
 
   useEffect(() => {
     let cancelled = false;
@@ -142,34 +171,74 @@ export function JewelleryOverlay({
   }, [overlaySrc]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    let cancelled = false;
 
-    if (!canvas) {
+    async function initFaceLandmarker() {
+      if (faceLandmarkerRef.current) {
+        return;
+      }
+
+      const filesetResolver = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm",
+      );
+
+      const landmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+        baseOptions: {
+          modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+          delegate: "GPU",
+        },
+        runningMode: "IMAGE",
+        numFaces: 1,
+      });
+
+      if (!cancelled) {
+        faceLandmarkerRef.current = landmarker;
+      }
+    }
+
+    initFaceLandmarker();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const previewElement = previewRef.current;
+
+    if (!canvas || !previewElement) {
       return;
     }
 
-    drawOverlay("initial");
+    const redraw = () => {
+      void drawOverlay("resize");
+    };
+
+    redraw();
 
     const resizeObserver = new ResizeObserver(() => {
-      drawOverlay("resize");
+      redraw();
     });
-    resizeObserver.observe(canvas);
+    resizeObserver.observe(previewElement);
 
-    window.addEventListener("resize", () => {
-      drawOverlay("resize");
-    });
+    window.addEventListener("resize", redraw);
 
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener("resize", () => {
-        drawOverlay("resize");
-      });
+      window.removeEventListener("resize", redraw);
     };
   }, [drawOverlay]);
 
   return (
     <div ref={previewRef} className={cn("relative overflow-hidden rounded-[1.5rem] bg-muted", className)}>
-      <img src={src} alt={alt} className="h-full w-full object-cover" />
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover"
+        onLoad={() => drawOverlay("initial")}
+      />
       {processedOverlaySrc ? (
         <>
           {placement?.visibleNeck === false ? (

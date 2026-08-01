@@ -7,6 +7,7 @@ export type FacePlacement = {
   faceHeight: number;
   chinY: number;
   neckLength: number;
+  rotationAngle: number;
   visibleNeck: boolean;
   message?: string;
 };
@@ -85,6 +86,7 @@ export function deriveFacePlacement(
       faceHeight: 0.24,
       chinY: 0.58,
       neckLength: 0.08,
+      rotationAngle: 0,
       visibleNeck: false,
       message: "For best results, use a photo showing your neck and shoulders.",
     };
@@ -111,6 +113,8 @@ export function deriveFacePlacement(
   const visibleNeck = neckLength > 0.10;
   const anchorY = Math.min(0.95, Math.max(0.02, chin.y + Math.max(0.01, neckLength * 0.10)));
   const normalizedNeckWidth = Math.max(0.08, Math.min(0.5, neckWidthPx / width));
+  const jawAngle = Math.atan2((rightJaw.y ?? 0) - (leftJaw.y ?? 0), (rightJaw.x ?? 0) - (leftJaw.x ?? 0));
+  const rotationAngle = Number.isFinite(jawAngle) ? jawAngle : 0;
 
   const message = visibleNeck
     ? undefined
@@ -122,6 +126,7 @@ export function deriveFacePlacement(
     anchorY: Number(anchorY.toFixed(4)),
     faceHeight: Number(faceHeight.toFixed(4)),
     chinY: Number(chin.y.toFixed(4)),
+    rotationAngle: Number(rotationAngle.toFixed(4)),
   });
 
   return {
@@ -131,6 +136,7 @@ export function deriveFacePlacement(
     faceHeight,
     chinY: chin.y,
     neckLength,
+    rotationAngle,
     visibleNeck,
     message,
   };

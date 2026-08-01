@@ -420,24 +420,31 @@ function Leaderboard() {
       </div>
       <div className="mt-4 space-y-3">
         {leaderboard.map((u) => (
-          <div key={u.rank} className="flex items-center gap-3">
-            <span
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-bold ${
-                u.rank === 1
-                  ? "bg-gold-soft/40 text-amber-700"
-                  : "bg-primary/10 text-primary"
-              }`}
-            >
-              {u.rank}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] font-semibold">{u.name}</p>
-              <p className="text-[11px] text-muted-foreground">
-                {u.title} · {u.votes} votes
-              </p>
+          <Link
+            key={u.rank}
+            to="/community/$id"
+            params={{ id: String(u.rank) }}
+            className="block"
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-bold ${
+                  u.rank === 1
+                    ? "bg-gold-soft/40 text-amber-700"
+                    : "bg-primary/10 text-primary"
+                }`}
+              >
+                {u.rank}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[13px] font-semibold">{u.name}</p>
+                <p className="text-[11px] text-muted-foreground">
+                  {u.title} · {u.votes} votes
+                </p>
+              </div>
+              <span className="shrink-0 text-[13px] font-bold text-primary">{u.score}</span>
             </div>
-            <span className="shrink-0 text-[13px] font-bold text-primary">{u.score}</span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

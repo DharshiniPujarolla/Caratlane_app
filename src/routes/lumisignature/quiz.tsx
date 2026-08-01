@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useRouter } from "@tanstack/react-router";
+import { ChevronLeft } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { Product, products } from "@/lib/data";
 
@@ -83,6 +84,7 @@ const results = {
 };
 
 function Quiz() {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
 
@@ -133,7 +135,15 @@ function Quiz() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-fuchsia-100 to-purple-100 px-4 py-8">
+    <div className="relative min-h-screen bg-gradient-to-br from-pink-50 via-fuchsia-100 to-purple-100 px-4 py-8">
+      <button
+        type="button"
+        onClick={() => router.history.back()}
+        aria-label="Go back"
+        className="absolute left-4 top-4 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/70 text-slate-950 shadow-[0_18px_48px_rgba(15,23,42,0.1)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/80"
+      >
+        <ChevronLeft size={20} />
+      </button>
       <div className="mx-auto w-full max-w-3xl rounded-[32px] border border-white/60 bg-white/90 p-8 shadow-2xl shadow-purple-200/30 backdrop-blur-xl">
         <div className="flex flex-col gap-6">
           <div className="space-y-2">

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";
@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/ProductCard";
 import SplashScreen from "@/components/SplashScreen";
 import lumiauraImg from "@/assets/brand-lumiaura.jpg";
 import shayaImg from "@/assets/brand-shaya.jpg";
+import { LumiAuraQuestModal } from "@/components/LumiAuraQuestModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
@@ -24,7 +25,7 @@ import {
   priceBuckets,
   products,
 } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { actions, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -124,11 +125,14 @@ function Index() {
   const wish = useStore((s) => s.wishlist.length);
 
   const [showBottomNav, setShowBottomNav] = useState(false);
+  const [isHomeContentVisible, setIsHomeContentVisible] = useState(false);
   const [showLumiAIPopup, setShowLumiAIPopup] = useState(false);
   const lumiAIPopupTimeout = useRef<number | null>(null);
   const lumiAIPopupReshowTimeout = useRef<number | null>(null);
 
   useEffect(() => {
+    actions.initializeJourney();
+
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowBottomNav(true);
@@ -147,6 +151,24 @@ function Index() {
       window.removeEventListener("scroll", handleScroll);
       if (lumiAIPopupTimeout.current) window.clearTimeout(lumiAIPopupTimeout.current);
       if (lumiAIPopupReshowTimeout.current) window.clearTimeout(lumiAIPopupReshowTimeout.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const target = document.getElementById("home-content");
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHomeContentVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
     };
   }, []);
 
@@ -173,7 +195,8 @@ function Index() {
 
   return (
     <div className="mx-auto max-w-7xl">
-      <SplashScreen />
+    <SplashScreen />
+      <LumiAuraQuestModal />
       <BrandsSection />
 
       <div id="home-content" className="space-y-7 lg:space-y-10 pb-24">
@@ -228,6 +251,7 @@ function Index() {
         </header>
 
         <BannerCarousel />
+        
 
         <section className="px-4">
           <Link
@@ -469,7 +493,7 @@ function Index() {
       {/* Navigation tab reveals when scrolling down */}
       {showBottomNav && <BottomNav />}
 
-      {showLumiAIPopup && (
+      {showLumiAIPopup && isHomeContentVisible && (
         <Link
           to="/lumiai"
           className="fixed left-4 bottom-24 z-50 flex h-[220px] w-[220px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-purple-700 via-fuchsia-600 to-pink-400 p-5 shadow-[0_28px_90px_rgba(120,72,200,0.18)] transition-transform duration-300 hover:scale-[1.02] backdrop-blur-sm animate-fade-up sm:left-6 cursor-pointer"

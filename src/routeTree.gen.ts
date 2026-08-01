@@ -17,6 +17,7 @@ import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as JourneyRouteImport } from './routes/journey'
 import { Route as LumiaiRouteImport } from './routes/lumiai'
+import { Route as LumiauraJourneyRouteImport } from './routes/lumiaura-journey'
 import { Route as LumimirrorRouteImport } from './routes/lumimirror'
 import { Route as LumisignatureRouteImport } from './routes/lumisignature'
 import { Route as OrdersRouteImport } from './routes/orders'
@@ -29,6 +30,7 @@ import { Route as StyleMissionRouteImport } from './routes/style-mission'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ApiLumimirrorGenerateRouteImport } from './routes/api/lumimirror-generate'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as CommunityIdRouteImport } from './routes/community.$id'
 import { Route as LumisignatureQuizRouteImport } from './routes/lumisignature/quiz'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -70,6 +72,11 @@ const JourneyRoute = JourneyRouteImport.update({
 const LumiaiRoute = LumiaiRouteImport.update({
   id: '/lumiai',
   path: '/lumiai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LumiauraJourneyRoute = LumiauraJourneyRouteImport.update({
+  id: '/lumiaura-journey',
+  path: '/lumiaura-journey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LumimirrorRoute = LumimirrorRouteImport.update({
@@ -132,6 +139,11 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunityIdRoute = CommunityIdRouteImport.update({
+  id: '/community/$id',
+  path: '/community/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LumisignatureQuizRoute = LumisignatureQuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -152,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
   '/lumiai': typeof LumiaiRoute
+  '/lumiaura-journey': typeof LumiauraJourneyRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -164,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -176,6 +190,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
   '/lumiai': typeof LumiaiRoute
+  '/lumiaura-journey': typeof LumiauraJourneyRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -188,6 +203,7 @@ export interface FileRoutesByTo {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -201,6 +217,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/journey': typeof JourneyRoute
   '/lumiai': typeof LumiaiRoute
+  '/lumiaura-journey': typeof LumiauraJourneyRoute
   '/lumimirror': typeof LumimirrorRoute
   '/lumisignature': typeof LumisignatureRouteWithChildren
   '/orders': typeof OrdersRoute
@@ -213,6 +230,7 @@ export interface FileRoutesById {
   '/wishlist': typeof WishlistRoute
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/community/$id': typeof CommunityIdRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -227,6 +245,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/journey'
     | '/lumiai'
+    | '/lumiaura-journey'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -239,6 +258,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -251,6 +271,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/journey'
     | '/lumiai'
+    | '/lumiaura-journey'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -263,6 +284,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   id:
@@ -275,6 +297,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/journey'
     | '/lumiai'
+    | '/lumiaura-journey'
     | '/lumimirror'
     | '/lumisignature'
     | '/orders'
@@ -287,6 +310,7 @@ export interface FileRouteTypes {
     | '/wishlist'
     | '/api/lumimirror-generate'
     | '/category/$slug'
+    | '/community/$id'
     | '/lumisignature/quiz'
     | '/product/$id'
   fileRoutesById: FileRoutesById
@@ -300,6 +324,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   JourneyRoute: typeof JourneyRoute
   LumiaiRoute: typeof LumiaiRoute
+  LumiauraJourneyRoute: typeof LumiauraJourneyRoute
   LumimirrorRoute: typeof LumimirrorRoute
   LumisignatureRoute: typeof LumisignatureRouteWithChildren
   OrdersRoute: typeof OrdersRoute
@@ -312,6 +337,7 @@ export interface RootRouteChildren {
   WishlistRoute: typeof WishlistRoute
   ApiLumimirrorGenerateRoute: typeof ApiLumimirrorGenerateRoute
   CategorySlugRoute: typeof CategorySlugRoute
+  CommunityIdRoute: typeof CommunityIdRoute
   ProductIdRoute: typeof ProductIdRoute
 }
 
@@ -371,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/lumiai'
       fullPath: '/lumiai'
       preLoaderRoute: typeof LumiaiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lumiaura-journey': {
+      id: '/lumiaura-journey'
+      path: '/lumiaura-journey'
+      fullPath: '/lumiaura-journey'
+      preLoaderRoute: typeof LumiauraJourneyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lumimirror': {
@@ -457,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/community/$id': {
+      id: '/community/$id'
+      path: '/community/$id'
+      fullPath: '/community/$id'
+      preLoaderRoute: typeof CommunityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lumisignature/quiz': {
       id: '/lumisignature/quiz'
       path: '/quiz'
@@ -495,6 +535,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   JourneyRoute: JourneyRoute,
   LumiaiRoute: LumiaiRoute,
+  LumiauraJourneyRoute: LumiauraJourneyRoute,
   LumimirrorRoute: LumimirrorRoute,
   LumisignatureRoute: LumisignatureRouteWithChildren,
   OrdersRoute: OrdersRoute,
@@ -507,6 +548,7 @@ const rootRouteChildren: RootRouteChildren = {
   WishlistRoute: WishlistRoute,
   ApiLumimirrorGenerateRoute: ApiLumimirrorGenerateRoute,
   CategorySlugRoute: CategorySlugRoute,
+  CommunityIdRoute: CommunityIdRoute,
   ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport

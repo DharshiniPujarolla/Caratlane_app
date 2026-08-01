@@ -1,6 +1,4 @@
 import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { TryOnBanner } from "@/components/TryOnBanner";
-import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";
@@ -253,11 +251,11 @@ function Index() {
         </header>
 
         <BannerCarousel />
-        <TryOnBanner />
+        
 
         <section className="px-4">
           <div className="rounded-[2.25rem] border border-white/70 bg-[linear-gradient(140deg,_rgba(255,255,255,0.95),_rgba(247,244,255,0.92))] p-2 shadow-[0_20px_65px_-28px_rgba(91,33,182,0.28)]">
-            <LumiMirrorCard />
+            
           </div>
         </section>
 

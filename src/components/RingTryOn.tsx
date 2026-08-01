@@ -78,8 +78,8 @@ export default function RingTryOn({ imageSrc }: RingTryOnProps) {
       const results = handLandmarker.detectForVideo(video, performance.now());
       const ringImg = ringImageRef.current;
 
-      if (ringImg?.complete && results.handLandmarks) {
-        for (const landmarks of results.handLandmarks) {
+      if (ringImg?.complete && results.landmarks) {
+        for (const landmarks of results.landmarks) {
           if (!landmarks?.[RING_LANDMARK_START_IDX] || !landmarks?.[RING_LANDMARK_END_IDX]) continue;
 
           const start = landmarks[RING_LANDMARK_START_IDX];

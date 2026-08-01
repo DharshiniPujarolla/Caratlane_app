@@ -1,12 +1,10 @@
-import { TryOnBanner } from "@/components/TryOnBanner";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";
 import { CategoryCircle, OfferCard, TileCard } from "@/components/Cards";
 import { SectionHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
-import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import SplashScreen from "@/components/SplashScreen";
 import lumiauraImg from "@/assets/brand-lumiaura.jpg";
 import shayaImg from "@/assets/brand-shaya.jpg";
@@ -14,6 +12,8 @@ import { LumiAuraQuestModal } from "@/components/LumiAuraQuestModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
+import { StyleMissionCard } from "@/components/StyleMissionCard";
+
 
 import {
   categories,
@@ -125,6 +125,10 @@ function Index() {
   const wish = useStore((s) => s.wishlist.length);
 
   const [showBottomNav, setShowBottomNav] = useState(false);
+  const [isHomeContentVisible, setIsHomeContentVisible] = useState(false);
+  const [showLumiAIPopup, setShowLumiAIPopup] = useState(false);
+  const lumiAIPopupTimeout = useRef<number | null>(null);
+  const lumiAIPopupReshowTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     actions.initializeJourney();
@@ -138,8 +142,47 @@ function Index() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    lumiAIPopupTimeout.current = window.setTimeout(() => {
+      setShowLumiAIPopup(true);
+    }, 2500);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (lumiAIPopupTimeout.current) window.clearTimeout(lumiAIPopupTimeout.current);
+      if (lumiAIPopupReshowTimeout.current) window.clearTimeout(lumiAIPopupReshowTimeout.current);
+    };
   }, []);
+
+  useEffect(() => {
+    const target = document.getElementById("home-content");
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHomeContentVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleCloseLumiAIPopup = () => {
+    setShowLumiAIPopup(false);
+
+    if (lumiAIPopupReshowTimeout.current) {
+      window.clearTimeout(lumiAIPopupReshowTimeout.current);
+    }
+
+    lumiAIPopupReshowTimeout.current = window.setTimeout(() => {
+      setShowLumiAIPopup(true);
+    }, 45000);
+  };
 
   const trending = products.slice(0, 6);
   const newArrivals = products.filter((p) => p.tags.includes("New Arrival")).slice(0, 6);
@@ -279,15 +322,9 @@ function Index() {
         </section>
 
         <section className="px-4">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-            <div className="h-full min-h-[220px]">
-              <TryOnBanner />
-            </div>
-            <div className="h-full min-h-[220px]">
-              <LumiMirrorCard />
-            </div>
-          </div>
+          <StyleMissionCard />
         </section>
+
 
         <section>
           <SectionHeader title="Shop by Category" to="/categories" />
@@ -461,6 +498,41 @@ function Index() {
 
       {/* Navigation tab reveals when scrolling down */}
       {showBottomNav && <BottomNav />}
+
+      {showLumiAIPopup && isHomeContentVisible && (
+        <Link
+          to="/lumiai"
+          className="fixed left-4 bottom-24 z-50 flex h-[220px] w-[220px] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-purple-700 via-fuchsia-600 to-pink-400 p-5 shadow-[0_28px_90px_rgba(120,72,200,0.18)] transition-transform duration-300 hover:scale-[1.02] backdrop-blur-sm animate-fade-up sm:left-6 cursor-pointer"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="text-amber-200/90 h-4 w-4 animate-pulse" />
+                <p className="text-[11px] uppercase tracking-[0.35em] text-amber-100">✨ MEET LUMIAI</p>
+              </div>
+              <h3 className="mt-3 text-lg font-semibold leading-tight text-white">
+                Experience AI-Powered Jewellery
+              </h3>
+              <p className="mt-3 text-sm text-white/90">Virtual Try-On · LumiMirror</p>
+            </div>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                handleCloseLumiAIPopup();
+              }}
+              className="h-9 w-9 rounded-full bg-white/10 text-sm font-semibold text-white/95 transition hover:bg-white/20"
+            >
+              ✕
+            </button>
+          </div>
+
+          <span className="pointer-events-none absolute right-4 bottom-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/90 shadow-[0_6px_18px_rgba(0,0,0,0.12)]">
+            <ArrowRight size={16} />
+          </span>
+        </Link>
+      )}
 
       {/* Voice Assistant is always visible on the landing page */}
       <ConciergeFab />

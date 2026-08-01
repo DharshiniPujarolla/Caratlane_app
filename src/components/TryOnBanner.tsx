@@ -20,8 +20,8 @@ export function TryOnBanner() {
   return (
     <Link
       to="/product/$id"
-      params={{ id: "necklaces-1" }}
-      className="group press mx-4 mt-4 block overflow-hidden rounded-[2rem] border border-white/60 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.25),_transparent_42%),linear-gradient(135deg,_#5b21b6_0%,_#8b5cf6_42%,_#f59e0b_100%)] p-5 text-white shadow-[0_24px_70px_-20px_rgba(91,33,182,0.55)]"
+      params={{ id: "necklaces-3" }}
+      className="press mx-4 mt-4 block h-full min-h-[220px] flex flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-purple-700 via-fuchsia-600 to-amber-500 p-4 text-white shadow-card"
     >
       <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">

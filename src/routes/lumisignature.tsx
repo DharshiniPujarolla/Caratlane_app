@@ -4,6 +4,7 @@ import {
   Outlet,
   useLocation,
 } from "@tanstack/react-router";
+import { PageHeader } from "@/components/PageHeader";
 import { products } from "@/lib/data";
 
 export const Route = createFileRoute("/lumisignature")({
@@ -23,8 +24,36 @@ function LumiSignature() {
     .filter((product) => ["Necklaces", "Earrings", "Pendants", "Rings"].includes(product.category))
     .slice(0, 4);
 
+  const featureCards = [
+    {
+      title: "Try It On Instantly",
+      description: "See your favourite pieces come to life with instant styling preview.",
+      stat: "2 min experience",
+      label: "Live try-on",
+      size: "lg",
+      productId: "rings-1",
+    },
+    {
+      title: "LumiMirror",
+      description: "A private, elegant mirror for selecting the perfect statement jewellery.",
+      stat: "15k+ analyses",
+      label: "Virtual styling",
+      size: "md",
+      productId: "rings-2",
+    },
+    {
+      title: "LumiSignature",
+      description: "Premium AI curation that uncovers your one-of-a-kind jewellery identity.",
+      stat: "98% Match",
+      label: "Signature recommendation",
+      size: "sm",
+      productId: "rings-3",
+    },
+  ] as const;
+
   return (
     <div className="min-h-screen overflow-hidden bg-gradient-to-br from-rose-50 via-amber-50 to-purple-100 px-6 py-10 text-slate-900">
+      <PageHeader title="LumiSignature" subtitle="Personalized jewellery experience" />
       <style>{`
         @keyframes floatY { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
       `}</style>
@@ -110,39 +139,19 @@ function LumiSignature() {
       </div>
 
       <div className="mx-auto mt-16 grid max-w-6xl gap-6 lg:grid-cols-[1.2fr_0.95fr_0.85fr]">
-        {[
-          {
-            title: "Try It On Instantly",
-            description: "See your favourite pieces come to life with instant styling preview.",
-            stat: "2 min experience",
-            image: featuredProducts[0]?.image,
-            label: "Live try-on",
-            size: "lg",
-          },
-          {
-            title: "LumiMirror",
-            description: "A private, elegant mirror for selecting the perfect statement jewellery.",
-            stat: "15k+ analyses",
-            image: featuredProducts[1]?.image,
-            label: "Virtual styling",
-            size: "md",
-          },
-          {
-            title: "LumiSignature",
-            description: "Premium AI curation that uncovers your one-of-a-kind jewellery identity.",
-            stat: "98% Match",
-            image: featuredProducts[2]?.image,
-            label: "Signature recommendation",
-            size: "sm",
-          },
-        ].map((feature, index) => (
-          <div
-            key={feature.title}
-            className={
-              `group relative overflow-hidden rounded-[40px] border border-white/70 bg-white/80 p-6 shadow-[0_20px_80px_rgba(120,81,169,0.16)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_110px_rgba(120,81,169,0.22)] ` +
-              (feature.size === "lg" ? "lg:pb-12" : feature.size === "md" ? "lg:pb-10" : "lg:pb-8")
-            }
-          >
+        {featureCards.map((feature, index) => {
+          const featureProduct = featuredProducts.find((product) => product.id === feature.productId);
+
+          return (
+            <Link
+              key={feature.title}
+              to="/product/$id"
+              params={{ id: feature.productId }}
+              className={
+                `group relative overflow-hidden rounded-[40px] border border-white/70 bg-white/80 p-6 shadow-[0_20px_80px_rgba(120,81,169,0.16)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_110px_rgba(120,81,169,0.22)] ` +
+                (feature.size === "lg" ? "lg:pb-12" : feature.size === "md" ? "lg:pb-10" : "lg:pb-8")
+              }
+            >
             <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-amber-300/25 blur-2xl" />
             <div className="pointer-events-none absolute left-6 top-8 h-10 w-10 rounded-full bg-white/70 blur-xl" />
             <div className="pointer-events-none absolute right-8 bottom-8 h-6 w-6 rounded-full bg-white/80 blur-xl" />
@@ -165,7 +174,7 @@ function LumiSignature() {
 
             <div className="mt-6 overflow-hidden rounded-[32px] border border-white/60 bg-slate-950/10 shadow-inner shadow-slate-900/10">
               <img
-                src={feature.image}
+                src={featureProduct?.image}
                 alt={feature.title}
                 className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
               />
@@ -173,7 +182,7 @@ function LumiSignature() {
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200">
                   {feature.label}
                 </p>
-                <p className="mt-2 text-base font-semibold">{featuredProducts[index]?.name}</p>
+                <p className="mt-2 text-base font-semibold">{featureProduct?.name}</p>
               </div>
               <div className="absolute right-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-2xl text-amber-200 shadow-lg shadow-amber-100/20">
                 ✨
@@ -195,8 +204,9 @@ function LumiSignature() {
                 Concierge level
               </span>
             </div>
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

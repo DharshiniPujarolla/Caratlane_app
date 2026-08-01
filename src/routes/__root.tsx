@@ -1,3 +1,5 @@
+import { BottomNav } from "@/components/BottomNav";
+import { ConciergeFab } from "@/components/ConciergeFab";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { JourneyProvider } from "../Journey/JourneyContext";
 import {
@@ -14,8 +16,6 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-import { BottomNav } from "@/components/BottomNav";
-import { ConciergeFab } from "@/components/ConciergeFab";
 
 function NotFoundComponent() {
   return (
@@ -123,28 +123,27 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const FULL_BLEED = ["/splash", "/brands", "/auth", "/product/", "/checkout"];
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const bare = FULL_BLEED.some((p) => pathname.startsWith(p));
+  
   const splashLike = pathname.startsWith("/splash") || pathname.startsWith("/brands");
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <JourneyProvider>
-        <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
-          <div key={pathname} className="animate-soft-in pb-24">
-            <Outlet />
-          </div>
-
-          {!bare && <BottomNav />}
-          {!splashLike && <ConciergeFab />}
+return (
+  <QueryClientProvider client={queryClient}>
+    <JourneyProvider>
+      <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
+        <div key={pathname} className="animate-soft-in pb-24">
+          <Outlet />
         </div>
 
-        <Toaster position="top-center" />
-      </JourneyProvider>
-    </QueryClientProvider>
-  );
+        
+        {!splashLike && <ConciergeFab />}
+      </div>
+
+      <Toaster position="top-center" />
+    </JourneyProvider>
+  </QueryClientProvider>
+);
 }
+        
+

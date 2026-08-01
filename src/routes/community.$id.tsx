@@ -76,7 +76,7 @@ function CommunityProfile() {
             <div className="mt-3 text-sm text-foreground">
               <p className="font-medium">Notable looks</p>
               <ul className="mt-2 list-disc pl-5">
-                {userInspirations.map((i) => (
+                {userInspirations.map((i: (typeof inspirations)[number]) => (
                   <li key={i.id} className="mt-1 text-sm text-muted-foreground">
                     {i.title} · {i.jewellery}
                   </li>

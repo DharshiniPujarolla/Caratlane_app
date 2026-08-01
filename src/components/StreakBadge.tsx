@@ -1,13 +1,8 @@
-import { useEffect, useState } from "react";
 import { Flame } from "lucide-react";
+import { useStore } from "@/lib/store";
 
 export function StreakBadge() {
-  const [streak, setStreak] = useState(1);
-
-  useEffect(() => {
-    const currentStreak = localStorage.getItem("user_daily_streak") || "1";
-    setStreak(parseInt(currentStreak, 10));
-  }, []);
+  const streak = useStore((s) => s.lumiAuraJourney.streakCount);
 
   return (
     <div className="flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500/10 to-amber-500/10 px-2.5 py-1 text-xs font-bold text-orange-600 border border-orange-200 shadow-2xs">

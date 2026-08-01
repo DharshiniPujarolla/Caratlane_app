@@ -10,7 +10,7 @@ import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import SplashScreen from "@/components/SplashScreen";
 import lumiauraImg from "@/assets/brand-lumiaura.jpg";
 import shayaImg from "@/assets/brand-shaya.jpg";
-import { DailySparkModal } from "@/components/DailySparkModal";
+import { LumiAuraQuestModal } from "@/components/LumiAuraQuestModal";
 import { StreakBadge } from "@/components/StreakBadge";
 import { BottomNav } from "@/components/BottomNav";
 import { ConciergeFab } from "@/components/ConciergeFab";
@@ -25,7 +25,7 @@ import {
   priceBuckets,
   products,
 } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { actions, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -127,6 +127,8 @@ function Index() {
   const [showBottomNav, setShowBottomNav] = useState(false);
 
   useEffect(() => {
+    actions.initializeJourney();
+
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowBottomNav(true);
@@ -148,7 +150,7 @@ function Index() {
   return (
     <div className="mx-auto max-w-7xl">
       <SplashScreen />
-      <DailySparkModal />
+      <LumiAuraQuestModal />
       <BrandsSection />
 
       <div id="home-content" className="space-y-7 lg:space-y-10 pb-24">

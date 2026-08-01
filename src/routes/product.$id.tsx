@@ -61,6 +61,7 @@ const tryOnEligible = product.category === "Necklaces" || product.category === "
 
   useEffect(() => {
     actions.view(product.id);
+    actions.browseCollections();
     setSlide(0);
 
     if (galleryRef.current) {

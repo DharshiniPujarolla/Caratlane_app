@@ -1,4 +1,6 @@
 import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { TryOnBanner } from "@/components/TryOnBanner";
+import { LumiMirrorCard } from "@/components/lumimirror/LumiMirrorCard";
 import { ArrowRight, Bell, ChevronDown, Heart, MapPin, Search, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { BannerCarousel } from "@/components/BannerCarousel";

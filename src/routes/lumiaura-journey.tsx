@@ -8,5 +8,9 @@ export const Route = createFileRoute("/lumiaura-journey")({
       { name: "description", content: "Track your LumiAura milestones, daily quests, XP and luxury badges." },
     ],
   }),
-  component: LumiAuraJourneyDashboard,
+  component: () => (
+    <div className="min-h-screen bg-[linear-gradient(180deg,#fdfcff_0%,#f7f3ff_100%)]">
+      <LumiAuraJourneyDashboard />
+    </div>
+  ),
 });

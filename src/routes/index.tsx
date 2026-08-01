@@ -208,6 +208,13 @@ function Index() {
         </header>
 
         <BannerCarousel />
+        <TryOnBanner />
+
+        <section className="px-4">
+          <div className="rounded-[2.25rem] border border-white/70 bg-[linear-gradient(140deg,_rgba(255,255,255,0.95),_rgba(247,244,255,0.92))] p-2 shadow-[0_20px_65px_-28px_rgba(91,33,182,0.28)]">
+            <LumiMirrorCard />
+          </div>
+        </section>
 
         <section className="px-4">
           <Link

@@ -89,7 +89,7 @@ function CommunityProfile() {
         <div>
           <h3 className="mb-3 text-lg font-semibold">Featured Jewellery</h3>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {collection.map((p) => (
+            {collection.map((p: (typeof products)[number]) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>

@@ -1,5 +1,7 @@
-import { ArrowRight, ChevronLeft, ShieldCheck, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, ChevronLeft, Coins, ShieldCheck, Sparkles } from "lucide-react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { GoldInvestmentAdvisor } from "@/components/GoldInvestmentAdvisor";
 import necklaceImg from "@/assets/p-necklace.jpg";
 import ringImg from "@/assets/p-ring2.jpg";
 import earringsImg from "@/assets/p.earrings3.jpg";

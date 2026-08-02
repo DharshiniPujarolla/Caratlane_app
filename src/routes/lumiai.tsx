@@ -22,7 +22,7 @@ function LumiAI() {
   const router = useRouter();
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 px-4 py-12 text-slate-900">
+    <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 px-3 py-6 text-slate-900 sm:px-4 sm:py-12">
       <button
         type="button"
         onClick={() => router.history.back()}
@@ -35,7 +35,7 @@ function LumiAI() {
         <div className="pointer-events-none absolute left-10 top-10 h-72 w-72 rounded-full bg-lavender-200/50 blur-3xl" />
         <div className="pointer-events-none absolute right-10 top-40 h-56 w-56 rounded-full bg-pink-200/50 blur-3xl" />
 
-        <section className="relative overflow-hidden rounded-[40px] border border-white/40 bg-white/85 p-10 shadow-[0_40px_120px_rgba(120,81,169,0.14)] backdrop-blur-xl">
+        <section className="relative overflow-hidden rounded-[40px] border border-white/40 bg-white/85 p-6 shadow-[0_40px_120px_rgba(120,81,169,0.14)] backdrop-blur-xl sm:p-10">
           <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/50 to-transparent" />
           <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-6">
@@ -55,7 +55,7 @@ function LumiAI() {
             </div>
 
             <div className="relative flex justify-center">
-              <div className="relative h-[280px] w-full max-w-[360px] overflow-hidden rounded-[36px] border border-white/50 bg-white/70 shadow-[0_40px_120px_rgba(122,62,201,0.15)]">
+              <div className="relative h-[220px] w-full max-w-[360px] overflow-hidden rounded-[36px] border border-white/50 bg-white/70 shadow-[0_40px_120px_rgba(122,62,201,0.15)] sm:h-[280px]">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-transparent" />
                 <div className="absolute left-6 top-6 h-20 w-20 rounded-full bg-amber-100/60 blur-3xl" />
                 <div className="absolute right-8 bottom-10 h-28 w-28 rounded-full bg-lavender-200/60 blur-3xl" />
@@ -74,9 +74,9 @@ function LumiAI() {
           <Link
             to="/product/$id"
             params={{ id: "necklaces-1" }}
-            className="group flex overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)]"
+            className="group flex flex-col overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)] sm:flex-row"
           >
-            <div className="relative flex w-1/2 items-center justify-center overflow-hidden rounded-l-[32px] bg-white/80 p-6">
+            <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-t-[32px] bg-white/80 p-6 sm:w-1/2 sm:rounded-l-[32px] sm:rounded-tr-none">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 via-transparent to-transparent" />
               <img
                 src={necklaceImg}
@@ -103,9 +103,9 @@ function LumiAI() {
           
           <Link
             to="/lumimirror"
-            className="group flex overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)]"
+            className="group flex flex-col overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)] sm:flex-row"
           >
-            <div className="relative flex w-1/2 items-center justify-center overflow-hidden rounded-l-[32px] bg-white/80 p-6">
+            <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-t-[32px] bg-white/80 p-6 sm:w-1/2 sm:rounded-l-[32px] sm:rounded-tr-none">
               <div className="absolute inset-0 bg-gradient-to-br from-lavender-100/40 via-transparent to-transparent" />
               <img
                 src={earringsImg}

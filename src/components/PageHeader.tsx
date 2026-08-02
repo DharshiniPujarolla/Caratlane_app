@@ -17,7 +17,7 @@ export function PageHeader({
       <button
         onClick={() => router.history.back()}
         aria-label="Go back"
-        className="press flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-secondary-foreground"
+        className="press flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full bg-secondary text-secondary-foreground"
       >
         <ChevronLeft size={18} />
       </button>

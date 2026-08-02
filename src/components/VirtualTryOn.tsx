@@ -18,6 +18,8 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const jewelryImageRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
@@ -31,32 +33,53 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
     jewelryImageRef.current = jewelryImg;
 
     async function setup() {
-      const filesetResolver = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
-      );
-
-      faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
-        baseOptions: {
-          modelAssetPath:
-            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
-          delegate: "GPU",
-        },
-        runningMode: "VIDEO",
-        numFaces: 1,
-      });
-
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 480, height: 640 },
-      });
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+      if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+        if (!isActive) return;
+        setStatus("error");
+        setErrorMessage(
+          "Camera access requires a secure connection (HTTPS or localhost). If you're testing from a local network IP like 192.168.x.x, switch to HTTPS or localhost before trying again."
+        );
+        setLoading(false);
+        return;
       }
 
-      if (!isActive) return;
-      setLoading(false);
-      renderLoop();
+      try {
+        const filesetResolver = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+        );
+
+        faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+          baseOptions: {
+            modelAssetPath:
+              "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+            delegate: "GPU",
+          },
+          runningMode: "VIDEO",
+          numFaces: 1,
+        });
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 480, height: 640 },
+        });
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          await videoRef.current.play();
+        }
+
+        if (!isActive) return;
+        setStatus("ready");
+        setLoading(false);
+        renderLoop();
+      } catch (error) {
+        if (!isActive) return;
+        setStatus("error");
+        const message = error instanceof DOMException && error.name === "NotAllowedError"
+          ? "Camera permission was denied. Please allow camera access and try again."
+          : "Camera could not be started. Please use HTTPS or localhost and allow camera access.";
+        setErrorMessage(message);
+        setLoading(false);
+      }
     }
 
     function renderLoop() {
@@ -160,10 +183,28 @@ export default function VirtualTryOn({ jewelryType, imageSrc }: VirtualTryOnProp
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-      <div style={{ position: "relative", width: 480, height: 640, margin: "0 auto" }}>
+      <div style={{ position: "relative", width: "min(100%, 480px)", aspectRatio: "3 / 4", margin: "0 auto" }}>
         {loading && <p style={{ textAlign: "center" }}>Loading camera & model...</p>}
+        {status === "error" && errorMessage && (
+          <div
+            style={{
+              display: "flex",
+              minHeight: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "16px",
+              borderRadius: 16,
+              background: "rgba(255,255,255,0.95)",
+              color: "#111827",
+              textAlign: "center",
+              lineHeight: 1.5,
+            }}
+          >
+            <p style={{ fontSize: 14, maxWidth: 320 }}>{errorMessage}</p>
+          </div>
+        )}
         <video ref={videoRef} style={{ display: "none" }} playsInline muted />
-        <canvas ref={canvasRef} style={{ width: "100%", height: "100%", borderRadius: 16, transform: "scaleX(-1)" }} />
+        {status !== "error" && <canvas ref={canvasRef} style={{ width: "100%", height: "100%", borderRadius: 16, transform: "scaleX(-1)" }} />}
       </div>
     </div>
   );

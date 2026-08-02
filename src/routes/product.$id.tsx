@@ -326,11 +326,12 @@ function ProductPage() {
         </section>
       )}
       {showTryOn && product.tryOnImage && tryOnJewelryType && (
-        <div className="fixed inset-0 z-50 mx-auto flex max-w-[480px] flex-col items-center justify-center bg-black/90 px-4">
+        <div className="fixed inset-0 z-50 mx-auto flex max-w-[480px] flex-col items-center justify-center overflow-y-auto bg-black/90 px-4 py-6">
           <VirtualTryOn jewelryType={tryOnJewelryType} imageSrc={product.tryOnImage} />
           <button
+            type="button"
             onClick={() => setShowTryOn(false)}
-            className="press mt-5 rounded-xl bg-card px-6 py-2.5 text-sm font-semibold"
+            className="press mt-5 min-h-11 rounded-xl bg-card px-6 py-3 text-sm font-semibold"
           >
             Close
           </button>

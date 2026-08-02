@@ -52,7 +52,7 @@ function LumiSignature() {
   ] as const;
 
   return (
-    <div className="min-h-screen overflow-hidden bg-gradient-to-br from-rose-50 via-amber-50 to-purple-100 px-6 py-10 text-slate-900">
+    <div className="min-h-screen overflow-hidden bg-gradient-to-br from-rose-50 via-amber-50 to-purple-100 px-4 py-6 text-slate-900 sm:px-6 sm:py-10">
       <PageHeader title="LumiSignature" subtitle="Personalized jewellery experience" />
       <style>{`
         @keyframes floatY { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
@@ -70,7 +70,7 @@ function LumiSignature() {
           </span>
 
           <div className="space-y-6">
-            <h1 className="max-w-3xl text-5xl font-black leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-6xl">
+            <h1 className="max-w-3xl text-3xl font-black leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
               Discover the Jewellery
               <span className="relative inline-flex">
                 Made Just For You
@@ -110,7 +110,7 @@ function LumiSignature() {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="h-64 w-full object-cover"
+                    className="aspect-[4/5] w-full object-cover"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4 text-white">
                     <p className="text-sm font-semibold">{product.name}</p>
@@ -128,7 +128,7 @@ function LumiSignature() {
                 className="group relative overflow-hidden rounded-[32px] border border-white/70 bg-white/90 shadow-xl shadow-slate-200/60 transition duration-500 hover:-translate-y-2"
                 style={{ animation: `floatY 8s ease-in-out ${index * 0.2}s infinite` }}
               >
-                <img src={product.image} alt={product.name} className="h-72 w-full object-cover" />
+                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4 text-white">
                   <p className="text-sm font-semibold">{product.name}</p>
                 </div>
@@ -148,7 +148,7 @@ function LumiSignature() {
               to="/product/$id"
               params={{ id: feature.productId }}
               className={
-                `group relative overflow-hidden rounded-[40px] border border-white/70 bg-white/80 p-6 shadow-[0_20px_80px_rgba(120,81,169,0.16)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_110px_rgba(120,81,169,0.22)] ` +
+                `group relative overflow-hidden rounded-[40px] border border-white/70 bg-white/80 p-4 shadow-[0_20px_80px_rgba(120,81,169,0.16)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_110px_rgba(120,81,169,0.22)] sm:p-6 ` +
                 (feature.size === "lg" ? "lg:pb-12" : feature.size === "md" ? "lg:pb-10" : "lg:pb-8")
               }
             >
@@ -176,7 +176,7 @@ function LumiSignature() {
               <img
                 src={featureProduct?.image}
                 alt={feature.title}
-                className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
+                className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="relative bg-gradient-to-t from-slate-950/90 to-transparent px-4 py-4 text-white">
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200">

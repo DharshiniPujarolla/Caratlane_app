@@ -37,7 +37,7 @@ export function ProductCard({ product, wide = false }: { product: Product; wide?
             toast.success(saved ? "Removed from wishlist" : "Added to wishlist");
           }}
           aria-label="Toggle wishlist"
-          className="glass press absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full"
+          className="glass press absolute right-2 top-2 flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full"
         >
           <Heart
             size={15}

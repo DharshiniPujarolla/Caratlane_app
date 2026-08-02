@@ -193,7 +193,7 @@ function LumiMirrorPage() {
 
               <div className="mt-4">
                 {isGeneratingImage ? (
-                  <div className="flex h-[420px] flex-col items-center justify-center rounded-[1.5rem] bg-muted text-center text-sm text-muted-foreground">
+                  <div className="flex min-h-[280px] flex-col items-center justify-center rounded-[1.5rem] bg-muted text-center text-sm text-muted-foreground sm:h-[420px]">
                     <LoaderCircle size={28} className="mb-3 animate-spin text-primary" />
                     <p className="font-medium text-foreground">Preparing your demo try-on preview…</p>
                     <p className="mt-1">This uses a simple local overlay to place the jewellery on your selfie.</p>
@@ -202,14 +202,14 @@ function LumiMirrorPage() {
                   <img
                     src={generatedImage}
                     alt="Generated try-on preview"
-                    className="h-[420px] w-full rounded-[1.5rem] object-contain"
+                    className="h-[280px] w-full rounded-[1.5rem] object-contain sm:h-[420px]"
                   />
                 ) : previewImage ? (
                   <div className="space-y-3">
                     <img
                       src={previewImage}
                       alt="Try-on preview"
-                      className="h-[420px] w-full rounded-[1.5rem] object-cover"
+                      className="h-[280px] w-full rounded-[1.5rem] object-cover sm:h-[420px]"
                     />
                     {(overlayMessage || generatedImageError) ? (
                       <div className="rounded-[1.25rem] border border-dashed border-border bg-muted/70 p-3 text-sm text-muted-foreground">
@@ -219,7 +219,7 @@ function LumiMirrorPage() {
                     ) : null}
                   </div>
                 ) : (
-                  <div className="flex h-[420px] items-center justify-center rounded-[1.5rem] bg-muted text-sm text-muted-foreground">
+                  <div className="flex min-h-[280px] items-center justify-center rounded-[1.5rem] bg-muted text-sm text-muted-foreground sm:h-[420px]">
                     No preview available
                   </div>
                 )}

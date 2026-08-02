@@ -256,15 +256,15 @@ function Index() {
         <section className="px-4">
           <Link
             to="/lumisignature"
-            className="press group block overflow-hidden rounded-[40px] bg-gradient-to-br from-purple-950 via-fuchsia-700 to-pink-500 p-6 shadow-[0_40px_120px_rgba(131,58,180,0.25)] transition duration-300 hover:-translate-y-1"
+            className="press group block overflow-hidden rounded-[40px] bg-gradient-to-br from-purple-950 via-fuchsia-700 to-pink-500 p-4 shadow-[0_40px_120px_rgba(131,58,180,0.25)] transition duration-300 hover:-translate-y-1 sm:p-6"
           >
-            <div className="relative grid h-[240px] gap-4 overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_top_left,_rgba(255,214,165,0.15),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(255,237,192,0.12),_transparent_35%),linear-gradient(135deg,#3f1456,#8b5cf6_45%,#ec4899)] p-6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:grid-cols-[1.1fr_0.9fr] lg:p-8">
+            <div className="relative flex flex-col gap-5 overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_top_left,_rgba(255,214,165,0.15),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(255,237,192,0.12),_transparent_35%),linear-gradient(135deg,#3f1456,#8b5cf6_45%,#ec4899)] p-4 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] sm:grid sm:grid-cols-[1.1fr_0.9fr] sm:gap-4 sm:p-6 lg:p-8">
               <div className="flex flex-col justify-between">
                 <div className="space-y-4">
                   <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-amber-100 backdrop-blur">
                     ✨ LumiSignature
                   </span>
-                  <h2 className="text-3xl font-black leading-tight tracking-[-0.04em] text-white sm:text-4xl">
+                  <h2 className="text-2xl font-black leading-tight tracking-[-0.04em] text-white sm:text-3xl lg:text-4xl">
                     Discover Your Jewellery DNA
                   </h2>
                   <p className="max-w-lg text-sm leading-6 text-white/85 sm:text-base">
@@ -278,26 +278,20 @@ function Index() {
                 </div>
               </div>
 
-              <div className="relative flex items-center justify-center">
-                <div className="absolute inset-x-4 top-4 h-36 rounded-full bg-amber-300/20 blur-3xl" />
-                <div className="relative h-full w-full max-w-[300px]">
+              <div className="relative flex min-h-[220px] items-center justify-center sm:min-h-0">
+                <div className="absolute inset-x-4 top-4 h-24 rounded-full bg-amber-300/20 blur-3xl sm:h-36" />
+                <div className="relative flex w-full flex-wrap items-center justify-center gap-3 sm:block sm:h-full sm:w-full sm:max-w-[300px]">
                   {signatureProducts.map((product, index) => {
-                    const positions = [
-                      'absolute left-0 top-6 h-36 w-36',
-                      'absolute right-0 top-0 h-44 w-44',
-                      'absolute left-14 bottom-4 h-28 w-28',
-                    ];
-
-                    const sizes = [
-                      'translate-z-0',
-                      'translate-z-10',
-                      'translate-z-0',
+                    const placements = [
+                      'relative h-24 w-24 sm:absolute sm:left-0 sm:top-6 sm:h-36 sm:w-36',
+                      'relative h-28 w-28 sm:absolute sm:right-0 sm:top-0 sm:h-44 sm:w-44',
+                      'relative h-20 w-20 sm:absolute sm:left-14 sm:bottom-4 sm:h-28 sm:w-28',
                     ];
 
                     return (
                       <div
                         key={product.id}
-                        className={`${positions[index]} overflow-hidden rounded-[30px] border border-white/15 bg-white/10 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-xl`}                        
+                        className={`${placements[index]} overflow-hidden rounded-[24px] border border-white/15 bg-white/10 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-xl sm:rounded-[30px]`}
                         style={{ animation: `floatY 8s ease-in-out ${index * 0.12}s infinite` }}
                       >
                         <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />

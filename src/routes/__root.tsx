@@ -131,8 +131,8 @@ function RootComponent() {
 return (
   <QueryClientProvider client={queryClient}>
     <JourneyProvider>
-      <div className="mx-auto min-h-screen w-full max-w-[480px] lg:max-w-[1600px] bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)]">
-        <div key={pathname} className="animate-soft-in pb-24">
+      <div className="mx-auto min-h-[100dvh] w-full max-w-[480px] overflow-x-hidden bg-background shadow-[0_0_60px_-20px_rgba(0,0,0,0.15)] lg:max-w-[1600px]">
+        <div key={pathname} className="animate-soft-in pb-24 sm:pb-28">
           <Outlet />
         </div>
 

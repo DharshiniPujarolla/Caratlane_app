@@ -48,7 +48,10 @@ export const Route = createFileRoute("/")({
 
 function Row({ children }: { children: React.ReactNode }) {
   return (
-    <div className="no-scrollbar flex gap-4 overflow-x-auto px-4 lg:px-8 pb-1">
+    <div
+      className="no-scrollbar flex gap-4 overflow-x-auto px-4 lg:px-8 pb-1"
+      style={{ touchAction: "pan-x", WebkitOverflowScrolling: "touch" }}
+    >
       {children}
     </div>
   );
@@ -251,7 +254,7 @@ function Index() {
         </header>
 
         <BannerCarousel />
-        
+  
 
         <section className="px-4">
           <Link

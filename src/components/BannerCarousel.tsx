@@ -27,6 +27,7 @@ export function BannerCarousel() {
           setIndex(Math.round(el.scrollLeft / el.clientWidth));
         }}
         className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto rounded-3xl"
+        style={{ touchAction: "pan-x", WebkitOverflowScrolling: "touch" }}
       >
         {banners.map((b) => (
           <Link

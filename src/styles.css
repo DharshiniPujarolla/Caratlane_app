@@ -308,3 +308,6 @@
    Desktop Layout
 =========================== */
 
+body {
+  pointer-events: auto !important;
+}

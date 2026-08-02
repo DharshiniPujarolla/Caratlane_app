@@ -5,6 +5,8 @@ import { GoldInvestmentAdvisor } from "@/components/GoldInvestmentAdvisor";
 import necklaceImg from "@/assets/p-necklace.jpg";
 import ringImg from "@/assets/p-ring2.jpg";
 import earringsImg from "@/assets/p.earrings3.jpg";
+import braceletImg from "@/assets/p-bracelet.jpg";
+import pendantImg from "@/assets/p.pendant3.jpg";
 
 export const Route = createFileRoute("/lumiai/")({
   head: () => ({
@@ -140,7 +142,7 @@ function LumiAI() {
             <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-t-[32px] bg-white/80 p-6 sm:w-1/2 sm:rounded-l-[32px] sm:rounded-tr-none">
               <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/25 via-transparent to-transparent" />
               <img
-                src={ringImg}
+                src={braceletImg}
                 alt="Diamond ring care preview"
                 className="relative h-[260px] w-full object-cover transition duration-300 group-hover:scale-105"
               />
@@ -176,7 +178,7 @@ function LumiAI() {
             <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-t-[32px] bg-white/80 p-6 sm:w-1/2 sm:rounded-l-[32px] sm:rounded-tr-none">
               <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/25 via-transparent to-[#6F4EFF]/15" />
               <img
-                src={ringImg}
+                src={pendantImg}
                 alt="Gold investment preview"
                 className="relative h-[260px] w-full object-cover transition duration-300 group-hover:scale-105"
               />

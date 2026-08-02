@@ -32,6 +32,7 @@ import { Route as ApiLumimirrorGenerateRouteImport } from './routes/api/lumimirr
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as CommunityIdRouteImport } from './routes/community.$id'
 import { Route as LumiaiIndexRouteImport } from './routes/lumiai.index'
+import { Route as LumiaiJewelcareRouteImport } from './routes/lumiai.jewelcare'
 import { Route as LumisignatureQuizRouteImport } from './routes/lumisignature/quiz'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -150,6 +151,11 @@ const LumiaiIndexRoute = LumiaiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LumiaiRoute,
 } as any)
+const LumiaiJewelcareRoute = LumiaiJewelcareRouteImport.update({
+  id: '/jewelcare',
+  path: '/jewelcare',
+  getParentRoute: () => LumiaiRoute,
+} as any)
 const LumisignatureQuizRoute = LumisignatureQuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
   '/community/$id': typeof CommunityIdRoute
+  '/lumiai/jewelcare': typeof LumiaiJewelcareRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
   '/lumiai/': typeof LumiaiIndexRoute
@@ -210,6 +217,7 @@ export interface FileRoutesByTo {
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
   '/community/$id': typeof CommunityIdRoute
+  '/lumiai/jewelcare': typeof LumiaiJewelcareRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
   '/lumiai': typeof LumiaiIndexRoute
@@ -238,6 +246,7 @@ export interface FileRoutesById {
   '/api/lumimirror-generate': typeof ApiLumimirrorGenerateRoute
   '/category/$slug': typeof CategorySlugRoute
   '/community/$id': typeof CommunityIdRoute
+  '/lumiai/jewelcare': typeof LumiaiJewelcareRoute
   '/lumisignature/quiz': typeof LumisignatureQuizRoute
   '/product/$id': typeof ProductIdRoute
   '/lumiai/': typeof LumiaiIndexRoute
@@ -267,6 +276,7 @@ export interface FileRouteTypes {
     | '/api/lumimirror-generate'
     | '/category/$slug'
     | '/community/$id'
+    | '/lumiai/jewelcare'
     | '/lumisignature/quiz'
     | '/product/$id'
     | '/lumiai/'
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/api/lumimirror-generate'
     | '/category/$slug'
     | '/community/$id'
+    | '/lumiai/jewelcare'
     | '/lumisignature/quiz'
     | '/product/$id'
     | '/lumiai'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/api/lumimirror-generate'
     | '/category/$slug'
     | '/community/$id'
+    | '/lumiai/jewelcare'
     | '/lumisignature/quiz'
     | '/product/$id'
     | '/lumiai/'
@@ -514,6 +526,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LumiaiIndexRouteImport
       parentRoute: typeof LumiaiRoute
     }
+    '/lumiai/jewelcare': {
+      id: '/lumiai/jewelcare'
+      path: '/jewelcare'
+      fullPath: '/lumiai/jewelcare'
+      preLoaderRoute: typeof LumiaiJewelcareRouteImport
+      parentRoute: typeof LumiaiRoute
+    }
     '/lumisignature/quiz': {
       id: '/lumisignature/quiz'
       path: '/quiz'
@@ -532,10 +551,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface LumiaiRouteChildren {
+  LumiaiJewelcareRoute: typeof LumiaiJewelcareRoute
   LumiaiIndexRoute: typeof LumiaiIndexRoute
 }
 
 const LumiaiRouteChildren: LumiaiRouteChildren = {
+  LumiaiJewelcareRoute: LumiaiJewelcareRoute,
   LumiaiIndexRoute: LumiaiIndexRoute,
 }
 
@@ -582,13 +603,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

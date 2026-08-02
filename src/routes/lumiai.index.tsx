@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronLeft, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ShieldCheck, Sparkles } from "lucide-react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import necklaceImg from "@/assets/p-necklace.jpg";
 import ringImg from "@/assets/p-ring2.jpg";

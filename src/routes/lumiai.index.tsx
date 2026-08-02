@@ -128,6 +128,40 @@ function LumiAI() {
               </button>
             </div>
           </Link>
+          <Link
+            to="/lumiai/jewelcare"
+            className="group flex flex-col overflow-hidden rounded-[32px] border border-white/30 bg-white/85 shadow-[0_32px_100px_rgba(96,50,135,0.14)] transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_40px_120px_rgba(96,50,135,0.22)] sm:flex-row"
+          >
+            <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-t-[32px] bg-white/80 p-6 sm:w-1/2 sm:rounded-l-[32px] sm:rounded-tr-none">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/25 via-transparent to-transparent" />
+              <img
+                src={ringImg}
+                alt="Diamond ring care preview"
+                className="relative h-[260px] w-full object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 rounded-l-[32px] bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+            </div>
+            <div className="flex w-1/2 flex-col justify-between p-10">
+              <div>
+                <p className="text-xs uppercase tracking-[0.32em] text-amber-900">LumiAI Feature</p>
+                <h2 className="mt-4 flex items-center gap-2 text-4xl font-semibold text-slate-950">
+                  <ShieldCheck size={28} className="text-[#D4AF37] drop-shadow-[0_0_12px_rgba(168,85,247,0.35)]" />
+                  JewelCare AI
+                </h2>
+                <p className="mt-2 text-sm font-medium text-slate-500">
+                  AI-powered Jewellery Care &amp; Maintenance Assistant
+                </p>
+                <p className="mt-4 text-base leading-8 text-slate-600">
+                  Track your jewellery's condition, receive personalized care reminders, cleaning
+                  schedules, and maintenance recommendations powered by AI.
+                </p>
+              </div>
+              <button className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_24px_rgba(249,207,36,0.18)] transition duration-300 hover:bg-amber-200">
+                Open JewelCare AI
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </Link>
         </section>
       </div>
     </div>

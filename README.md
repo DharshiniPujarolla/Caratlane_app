@@ -2,7 +2,7 @@
 
 A premium luxury jewelry e-commerce mobile application inspired by the CaratLane experience, built with a modern design language, smooth micro-interactions, AI-powered styling, and a real-time **Virtual Try-On** experience.
 
-**Live App:** [gem-muse-app.lovable.app](https://gem-muse-app.lovable.app)
+**Deployed App:** ["https://caratlaneapp.vercel.app/")
 
 ---
 

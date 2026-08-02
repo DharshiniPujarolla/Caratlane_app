@@ -22,6 +22,9 @@ export const Route = createFileRoute("/lumiai/")({
 
 function LumiAI() {
   const router = useRouter();
+  const [goldOpen, setGoldOpen] = useState(false);
+
+
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 px-3 py-6 text-slate-900 sm:px-4 sm:py-12">
